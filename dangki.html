@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .register-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .register-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .register-container button:hover {
+            background: #1e7e34;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .link {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Đăng Ký</h2>
+    <form id="registerForm">
+        <input type="text" id="username" placeholder="Tên đăng nhập" required>
+        <input type="password" id="password" placeholder="Mật khẩu" required>
+        <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+        <div id="errorMsg" class="error"></div>
+        <button type="submit">Đăng ký</button>
+    </form>
+    <div class="link">
+        <a href="dangnhap.html">Đã có tài khoản? Đăng nhập</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const confirmPassword = document.getElementById("confirmPassword").value.trim();
+        const errorMsg = document.getElementById("errorMsg");
+
+        if (!username || !password || !confirmPassword) {
+            errorMsg.textContent = "Vui lòng nhập đầy đủ thông tin.";
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            errorMsg.textContent = "Mật khẩu nhập lại không khớp.";
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        if (users.find(user => user.username === username)) {
+            errorMsg.textContent = "Tên đăng nhập đã tồn tại.";
+            return;
+        }
+
+        users.push({ username, password });
+        localStorage.setItem("users", JSON.stringify(users));
+
+        alert("Đăng ký thành công! Mời bạn đăng nhập.");
+        window.location.href = "dangnhap.html"; // Tự động chuyển sang đăng nhập
+    });
+</script>
+
+</body>
+</html>

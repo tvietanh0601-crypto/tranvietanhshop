@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranvietanhShop - Giao Diện Chính</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #28a745;
+            --dark-bg: #1a1a1a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 { color: var(--dark-bg); margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 25px; }
+        
+        /* Hiển thị dựa trên trạng thái đăng nhập */
+        #shop-content { display: none; }
+        #login-prompt { display: block; }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .btn {
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-blue { background: var(--primary-color); }
+        .btn-green { background: var(--secondary-color); }
+        .btn-red { background: #dc3545; grid-column: span 2; margin-top: 10px; }
+        .btn:hover { opacity: 0.8; transform: translateY(-3px); }
+
+        .welcome-msg {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="login-prompt">
+        <h1>Chào mừng tới Shop!</h1>
+        <p>Vui lòng đăng nhập để xem các mặt hàng Blox Fruits và Robux.</p>
+        <div class="btn-group">
+            <a href="dangnhap.html" class="btn btn-blue">Đăng Nhập</a>
+            <a href="dangki.html" class="btn btn-green">Đăng Ký</a>
+        </div>
+    </div>
+
+    <div id="shop-content">
+        <div class="welcome-msg">Chào mừng, <span id="user-display"></span>!</div>
+        <h1>TranvietanhShop.com</h1>
+        <p>Chọn danh mục cậu muốn khám phá:</p>
+        
+        <div class="btn-group">
+            <a href="https://sites.google.com/view/tranvietanhshop/acc-blox-fruit" target="_blank" class="btn btn-blue">Acc Blox Fruit</a>
+            <a href="https://sites.google.com/view/tranvietanhshop/robux" target="_blank" class="btn btn-green">Mua Robux</a>
+            <a href="https://sites.google.com/view/tranvietanhshop/cay-thue" target="_blank" class="btn btn-blue">Cày Thuê</a>
+            <a href="https://discord.gg/your-link" target="_blank" class="btn btn-green">Hỗ Trợ Discord</a>
+            
+            <button onclick="logout()" class="btn btn-red">Đăng Xuất</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Kiểm tra trạng thái khi vừa mở trang
+    window.onload = function() {
+        const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+        const currentUser = sessionStorage.getItem("currentUser");
+
+        if (isLoggedIn === "true") {
+            document.getElementById("login-prompt").style.display = "none";
+            document.getElementById("shop-content").style.display = "block";
+            document.getElementById("user-display").textContent = currentUser;
+        }
+    };
+
+    function logout() {
+        sessionStorage.clear();
+        window.location.reload(); // Tải lại trang để về trạng thái Login
+    }
+</script>
+
+</body>
+</html>
