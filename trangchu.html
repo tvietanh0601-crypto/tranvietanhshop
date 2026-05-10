@@ -29,21 +29,20 @@
         /* Nội dung chính */
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
         
-        /* KHU VỰC BANNER */
+        /* FIX BANNER: Hiện đầy đủ 100% ảnh */
         .banner-container {
             width: 100%;
-            max-height: 300px;
             margin-bottom: 20px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: #212529; /* Nền tối để nếu ảnh chưa load thì nhìn vẫn sang */
+            background: #212529; /* Nền tối để tôn ảnh lên */
         }
         .shop-banner {
             width: 100%;
-            height: auto; /* Quan trọng: Giúp hiện đầy đủ không bị cắt */
+            height: auto; /* Tự động co giãn theo chiều cao thật của ảnh */
             display: block;
-            object-fit: contain; /* Đảm bảo toàn bộ ảnh nằm gọn trong khung */
+            object-fit: contain; /* Đảm bảo toàn bộ ảnh hiện ra, không bị cắt mép */
         }
 
         /* Thanh Header (Tên + ID) */
@@ -57,7 +56,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
             margin-bottom: 20px;
         }
-        .user-info { font-weight: bold; color: #333; font-size: 1.1rem; }
         .id-badge { 
             color: #007bff; 
             font-weight: bold; 
@@ -69,10 +67,10 @@
         }
 
         /* Nút bấm */
-        .btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .btn { padding: 10px 25px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; transition: 0.3s; display: inline-block; }
         .btn-logout { background: #dc3545; color: white; }
-        .btn-logout:hover { background: #c82333; }
-        .btn-login { background: #007bff; color: white; }
+        .btn-blue { background: #007bff; color: white; }
+        .btn-green { background: #28a745; color: white; }
 
         /* Khung nội dung */
         .card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
@@ -96,20 +94,17 @@
         </div>
 
         <div class="header">
-            <div id="userArea">
-                </div>
-            <div id="btnArea">
-                </div>
+            <div id="userArea"></div>
+            <div id="btnArea"></div>
         </div>
 
         <div class="card">
             <h2 style="color: #212529;">Chào mừng đến với Shop của Việt Anh!</h2>
-            <p style="color: #666; font-size: 1.1rem;">Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín.</p>
+            <p style="color: #666;">Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín.</p>
             <hr>
-            <p>Sử dụng menu bên trái để chọn mặt hàng cậu nhé!</p>
             <div style="margin-top: 25px;">
-                <button class="btn btn-login" onclick="location.href='acc-blox-fruit.html'" style="margin-right: 10px;">Vào Shop Acc</button>
-                <button class="btn" onclick="location.href='robux.html'" style="background: #28a745; color: white;">Nạp Robux Ngay</button>
+                <button class="btn btn-blue" onclick="location.href='acc-blox-fruit.html'" style="margin-right: 15px;">Vào Shop Acc</button>
+                <button class="btn btn-green" onclick="location.href='robux.html'">Nạp Robux Ngay</button>
             </div>
         </div>
     </div>
@@ -119,22 +114,19 @@
             const userArea = document.getElementById("userArea");
             const btnArea = document.getElementById("btnArea");
             
-            // Lấy dữ liệu đăng nhập từ LocalStorage
             const loggedIn = localStorage.getItem("isLoggedIn") === "true";
             const currentU = localStorage.getItem("currentUser");
             const users = JSON.parse(localStorage.getItem("users")) || [];
 
             if (loggedIn && currentU) {
-                // Nếu đã đăng nhập, tìm ID tương ứng
                 const data = users.find(u => u.username === currentU);
                 const id = data ? data.userId : "0000";
 
                 userArea.innerHTML = `Chào cậu, <span style="color:#007bff">${currentU}</span> <span class="id-badge">ID: #${id}</span>`;
                 btnArea.innerHTML = `<button class="btn btn-logout" onclick="thoat()">Thoát Shop</button>`;
             } else {
-                // Trạng thái khách vãng lai
                 userArea.innerHTML = `<span style="color:#888">Khách vãng lai</span>`;
-                btnArea.innerHTML = `<a href="dashboard.html" class="btn btn-login">Đăng Nhập</a>`;
+                btnArea.innerHTML = `<a href="dashboard.html" class="btn btn-blue">Đăng Nhập</a>`;
             }
         }
 
@@ -144,7 +136,6 @@
             location.reload(); 
         }
 
-        // Tự động kiểm tra khi load trang
         checkStatus();
     </script>
 </body>
