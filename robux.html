@@ -1,36 +1,63 @@
-<style>
-  .zalo-container {
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 20px;
-  }
-  .zalo-btn {
-    display: inline-block;
-    background-color: #0068ff;
-    color: white;
-    padding: 12px 30px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(0,104,255,0.3);
-  }
-  .zalo-btn:hover {
-    background-color: #0056d2;
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,104,255,0.4);
-  }
-  .text-hint {
-    margin-bottom: 15px;
-    color: #333;
-    font-size: 16px;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Nạp Robux - TranvietanhShop</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2, .sidebar p { cursor: pointer; padding: 10px; border-radius: 8px; transition: 0.3s; }
+        .sidebar p:hover { background: #3d444b; padding-left: 15px; }
+        
+        .main { margin-left: 250px; padding: 25px; width: calc(100% - 250px); }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        
+        .robux-card { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 600px; margin: 40px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .price-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .price-table th, .price-table td { padding: 12px; border: 1px solid #eee; }
+        .price-table th { background: #007bff; color: white; }
+        .btn-zalo { background: #0068ff; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2 onclick="location.href='trangchu.html'">Tranvietanh...</h2>
+        <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
+        <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
+        <p onclick="location.href='robux.html'" style="background:#3d444b">💎 Mua Robux</p>
+    </div>
 
-<div class="zalo-container">
-  <p class="text-hint">Soạn gói cần mua, gửi vào:</p>
-  <a href="https://zalo.me/0886272568" target="_blank" class="zalo-btn">
-    Chắn chat Zalo tại đây
-  </a>
-</div>
+    <div class="main">
+        <div class="header">
+            <div id="userArea"></div>
+            <button onclick="thoat()" style="background:#dc3545; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer">Thoát</button>
+        </div>
+
+        <div class="robux-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Robux_2019_Logo_gold.svg" width="80" alt="Robux">
+            <h2>Nạp Robux Chính Hãng (120H)</h2>
+            <table class="price-table">
+                <tr><th>Số tiền</th><th>Robux nhận được</th></tr>
+                <tr><td>10.000đ</td><td>60 Robux</td></tr>
+                <tr><td>20.000đ</td><td>120 Robux</td></tr>
+                <tr><td>50.000đ</td><td>300 Robux</td></tr>
+                <tr><td>100.000đ</td><td>650 Robux (Kèm Bonus)</td></tr>
+            </table>
+            <p>Liên hệ ngay Zalo Admin để nạp cực nhanh:</p>
+            <a href="https://zalo.me/0886272568" class="btn-zalo">💬 Nhắn Tin Qua Zalo</a>
+        </div>
+    </div>
+
+    <script>
+        function loadUser() {
+            const currentU = localStorage.getItem("currentUser");
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const data = users.find(u => u.username === currentU);
+            const id = data ? data.userId : "0000";
+            document.getElementById("userArea").innerHTML = `Chào, <span style="color:#007bff">${currentU || 'Khách'}</span> <span style="color:#007bff; font-weight:bold; margin-left:10px;">ID: #${id}</span>`;
+        }
+        function thoat() { localStorage.removeItem("isLoggedIn"); location.href = "dashboard.html"; }
+        loadUser();
+    </script>
+</body>
+</html>
