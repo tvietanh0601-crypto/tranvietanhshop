@@ -2,191 +2,95 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Chủ - TranvietanhShop</title>
     <style>
-        :root {
-            --primary: #007bff;
-            --secondary: #28a745;
-            --danger: #dc3545;
-            --dark: #212529;
-            --light: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #e9ecef;
-            margin: 0;
-            display: flex;
-        }
-
-        /* 1. Kiểm tra bảo vệ trang ngay lập tức */
-        /* Nếu không có thẻ bài 'isLoggedIn', nó sẽ đẩy về dangnhap.html ngay trước khi hiện nội dung */
-        <script>
-            if (sessionStorage.getItem("isLoggedIn") !== "true") {
-                window.location.href = "dangnhap.html";
-            }
-        </script>
-
-        /* Sidebar - Thanh menu bên trái */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background: var(--dark);
-            color: white;
-            padding: 20px;
-            position: fixed;
-        }
-
-        .sidebar h2 {
-            font-size: 1.2rem;
-            text-align: center;
-            border-bottom: 1px solid #444;
-            padding-bottom: 15px;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .sidebar-menu li {
-            padding: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 5px;
-        }
-
-        .sidebar-menu li:hover {
-            background: #343a40;
-        }
-
-        .sidebar-menu a {
-            color: white;
-            text-decoration: none;
-            display: block;
-        }
-
-        /* Nội dung chính bên phải */
-        .main {
-            margin-left: 250px;
-            padding: 40px;
-            width: 100%;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .welcome-text span {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .logout-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Khu vực các nút bấm vào Shop */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .shop-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-
-        .shop-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-
-        .shop-card h3 { color: var(--dark); margin-top: 0; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .main { margin-left: 250px; padding: 30px; width: calc(100% - 250px); }
         
-        .go-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 12px 25px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
+        .header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: white; padding: 15px 25px; border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
         }
 
-        .btn-robux { background: var(--secondary); }
+        /* Style cho Tên + ID */
+        .user-box { display: flex; align-items: center; gap: 10px; font-weight: bold; color: #333; }
+        .id-badge { background: #007bff; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; }
+
+        /* Nút bấm */
+        .btn { padding: 10px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; display: inline-block; }
+        .btn-login { background: #007bff; color: white; }
+        .btn-logout { background: #dc3545; color: white; }
+
+        .content-card { background: white; padding: 20px; border-radius: 12px; margin-top: 20px; min-height: 300px; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>TranvietanhShop</h2>
-        <ul class="sidebar-menu">
-            <li><a href="#">🏠 Trang Chủ</a></li>
-            <li><a href="acc-blox-fruit.html" target="_blank">⚔️ Acc Blox Fruit</a></li>
-            <li><a href="robux.html" target="_blank">💎 Mua Robux</a></li>
-            <li><a href="https://discord.gg/fwfgvwd" target="_blank">💬 Discord Hỗ Trợ</a></li>
-        </ul>
+        <h2>Tranvietanh...</h2>
+        <p>⚔️ Blox Fruit</p>
+        <p>💎 Mua Robux</p>
     </div>
 
     <div class="main">
         <div class="header">
-            <div class="welcome-text">
-                Chào mừng cậu, <span id="user-display">Người dùng</span>!
-            </div>
-            <button class="logout-btn" onclick="logout()">Thoát Shop</button>
+            <div id="userInfoSection">
+                </div>
+            <div id="actionButtonSection">
+                </div>
         </div>
 
-        <div class="shop-grid">
-            <div class="shop-card">
-                <h3>Cửa Hàng Acc</h3>
-                <p>Nhiều Acc Blox Fruit Max Level, Godhuman giá cực rẻ.</p>
-                <a href="acc-blox-fruit.html" target="_blank" class="go-btn">Vào Xem Ngay</a>
+        <div class="content-card">
+            <h3>Chào mừng cậu đến với TranvietanhShop!</h3>
+            <p>Khám phá các mặt hàng cực hot phía bên dưới nhé.</p>
+            <hr>
             </div>
-
-            <div class="shop-card">
-                <h3>Nạp Robux</h3>
-                <p>Giao dịch tự động, uy tín 100%, có ngay trong game.</p>
-                <a href="robux.html" target="_blank" class="go-btn btn-robux">Mua Robux</a>
-            </div>
-        </div>
-
-        <div style="margin-top: 40px; background: #fff3cd; padding: 20px; border-radius: 10px; border: 1px solid #ffeeba;">
-            <h4 style="margin-top: 0;">📢 Thông báo mới</h4>
-            <p>- Cập nhật thêm tính năng bảo mật bằng Session cho website.</p>
-            <p>- Khi cậu đóng trình duyệt, hệ thống sẽ tự động đăng xuất để bảo vệ tài khoản!</p>
-        </div>
     </div>
 
     <script>
-        // Hiển thị tên người dùng đã lưu từ file dangnhap.html
-        document.getElementById("user-display").textContent = sessionStorage.getItem("currentUser") || "Cậu";
+        function loadHeader() {
+            const userSection = document.getElementById("userInfoSection");
+            const btnSection = document.getElementById("actionButtonSection");
 
-        // Hàm Đăng xuất
-        function logout() {
-            sessionStorage.clear(); // Xóa sạch "thẻ bài" đăng nhập
-            window.location.href = "dangnhap.html"; // Quay về trang đăng nhập
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUserName = localStorage.getItem("currentUser");
+
+            if (isLoggedIn && currentUserName) {
+                // 1. Lấy ID từ danh sách người dùng
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                const userObj = users.find(u => u.username === currentUserName);
+                const displayId = userObj ? userObj.userId : "N/A";
+
+                // 2. Hiển thị Tên + ID
+                userSection.innerHTML = `
+                    <div class="user-box">
+                        <span>${currentUserName}</span>
+                        <span class="id-badge">ID: ${displayId}</span>
+                    </div>
+                `;
+                // 3. Hiển thị nút Thoát Shop
+                btnSection.innerHTML = `
+                    <button class="btn btn-logout" onclick="logout()">Thoát Shop</button>
+                `;
+            } else {
+                // 4. Nếu chưa đăng nhập: Hiển thị trạng thái khách và nút Đăng Nhập
+                userSection.innerHTML = `<span style="color: #999;">Khách vãng lai</span>`;
+                btnSection.innerHTML = `
+                    <a href="dashboard.html" class="btn btn-login">Đăng Nhập</a>
+                `;
+            }
         }
+
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
+            location.reload(); // Tải lại trang để đổi nút ngay lập tức
+        }
+
+        // Chạy hàm khi vừa mở trang
+        loadHeader();
     </script>
 </body>
 </html>
