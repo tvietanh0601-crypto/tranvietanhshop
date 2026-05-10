@@ -4,38 +4,88 @@
     <meta charset="UTF-8">
     <title>Trang Chủ - TranvietanhShop</title>
     <style>
+        /* Giao diện tổng thể */
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
+        
+        /* Thanh Menu bên trái */
         .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { cursor: pointer; color: white; text-align: center; margin-bottom: 30px; }
+        .sidebar p { 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin: 5px 0;
+        }
+        .sidebar p:hover { 
+            background: #3d444b; 
+            padding-left: 20px; 
+            color: #007bff;
+        }
+        .sidebar p.active { background: #007bff; color: white; }
+
+        /* Nội dung chính */
         .main { margin-left: 250px; padding: 25px; width: calc(100% - 250px); }
+        
+        /* Thanh Header trên cùng */
         .header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            background: white; padding: 15px 25px; border-radius: 12px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: white; 
+            padding: 15px 25px; 
+            border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
         }
         .user-info { font-weight: bold; color: #333; font-size: 1.1rem; }
-        .id-badge { color: #007bff; font-weight: bold; margin-left: 10px; background: #e7f1ff; padding: 4px 10px; border-radius: 6px; border: 1px solid #b3d7ff; }
-        .btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; display: inline-block; }
+        .id-badge { 
+            color: #007bff; 
+            font-weight: bold; 
+            margin-left: 10px; 
+            background: #e7f1ff; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            border: 1px solid #b3d7ff; 
+        }
+
+        /* Nút bấm */
+        .btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; }
         .btn-logout { background: #dc3545; color: white; }
         .btn-login { background: #007bff; color: white; }
-        .card { background: white; padding: 30px; border-radius: 15px; margin-top: 20px; text-align: center; }
+
+        /* Khung thông báo giữa màn hình */
+        .card { background: white; padding: 40px; border-radius: 15px; margin-top: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
-        <h2>TranvietanhShop</h2>
-        <p>⚔️ Acc Blox Fruit</p>
-        <p>💎 Mua Robux</p>
+        <h2 onclick="location.href='trangchu.html'">TranvietanhShop</h2>
+        <p class="active" onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
+        <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
+        <p onclick="location.href='robux.html'">💎 Mua Robux</p>
+        <hr style="border-color: #444">
+        <p onclick="window.open('https://zalo.me/0886272568', '_blank')">💬 Liên Hệ Admin</p>
     </div>
+
     <div class="main">
         <div class="header">
-            <div id="userArea"></div>
-            <div id="btnArea"></div>
+            <div id="userArea">
+                </div>
+            <div id="btnArea">
+                </div>
         </div>
+
         <div class="card">
-            <h3>Chào mừng đến với Shop của Việt Anh!</h3>
-            <p>Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín.</p>
+            <h2 style="color: #212529;">Chào mừng đến với Shop của Việt Anh!</h2>
+            <p style="color: #666; font-size: 1.1rem;">Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín.</p>
             <hr>
             <p>Sử dụng menu bên trái để chọn mặt hàng cậu nhé!</p>
+            <div style="margin-top: 30px;">
+                <button class="btn btn-login" onclick="location.href='acc-blox-fruit.html'" style="margin-right: 10px;">Xem Acc Ngay</button>
+                <button class="btn" onclick="location.href='robux.html'" style="background: #28a745; color: white;">Mua Robux</button>
+            </div>
         </div>
     </div>
 
@@ -44,16 +94,20 @@
             const userArea = document.getElementById("userArea");
             const btnArea = document.getElementById("btnArea");
             
+            // Lấy dữ liệu từ máy khách
             const loggedIn = localStorage.getItem("isLoggedIn") === "true";
             const currentU = localStorage.getItem("currentUser");
             const users = JSON.parse(localStorage.getItem("users")) || [];
 
             if (loggedIn && currentU) {
+                // Nếu đã đăng nhập, tìm ID
                 const data = users.find(u => u.username === currentU);
                 const id = data ? data.userId : "0000";
+
                 userArea.innerHTML = `Chào cậu, <span style="color:#007bff">${currentU}</span> <span class="id-badge">ID: #${id}</span>`;
                 btnArea.innerHTML = `<button class="btn btn-logout" onclick="thoat()">Thoát Shop</button>`;
             } else {
+                // Nếu là khách
                 userArea.innerHTML = `<span style="color:#888">Khách vãng lai</span>`;
                 btnArea.innerHTML = `<a href="dashboard.html" class="btn btn-login">Đăng Nhập</a>`;
             }
@@ -62,9 +116,10 @@
         function thoat() {
             localStorage.removeItem("isLoggedIn");
             localStorage.removeItem("currentUser");
-            location.reload();
+            location.reload(); // Load lại trang để về trạng thái khách
         }
 
+        // Chạy hàm kiểm tra ngay khi load trang
         checkStatus();
     </script>
 </body>
