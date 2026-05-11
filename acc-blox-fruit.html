@@ -125,3 +125,18 @@
 
 </body>
 </html>
+
+function checkLogin() {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    const currentUser = localStorage.getItem("currentUser");
+    const userArea = document.getElementById("userArea"); // Cậu nhớ đặt id cho phần hiển thị tên khách nhé
+
+    if (loggedIn !== "true" || !currentUser) {
+        // Nếu chưa đăng nhập hoặc đã đăng xuất, đuổi về trang login hoặc hiện "Khách"
+        alert("Cậu cần đăng nhập để xem đầy đủ thông tin nhé!");
+        location.href = "dashboard.html"; 
+    }
+}
+
+// Gọi hàm này ngay khi trang vừa tải xong
+checkLogin();
