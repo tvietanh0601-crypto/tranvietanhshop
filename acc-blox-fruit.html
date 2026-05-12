@@ -2,110 +2,163 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Acc Blox Fruit - TranvietanhShop</title>
+    <title>Cửa Hàng Acc - TranvietanhShop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        
-        /* Sidebar */
         .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; }
-        .sidebar p { padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
+        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; margin-bottom: 30px; }
+        .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
         .sidebar p:hover { background: #3d444b; color: #007bff; }
-        .sidebar p.active { background: #007bff; color: white; }
-
-        /* Main Content */
+        
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-
-        /* Banner */
-        .banner-container { width: 100%; margin-bottom: 20px; border-radius: 15px; overflow: hidden; background: #212529; }
-        .shop-banner { width: 100%; height: auto; display: block; object-fit: contain; }
-
-        /* Header thanh toán/người dùng */
-        .user-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            background: white; padding: 15px 25px; border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px;
-        }
-        .id-badge { color: #007bff; font-weight: bold; background: #e7f1ff; padding: 4px 10px; border-radius: 6px; border: 1px solid #b3d7ff; margin-left: 10px; }
-
-        /* Tiêu đề căn giữa */
-        .title { text-align: center; font-size: 2.2rem; background: linear-gradient(to right, #ff416c, #ff4b2b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 30px 0; font-weight: bold; }
-
-        /* Danh sách Acc căn giữa */
-        .acc-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .acc-card { background: white; width: 320px; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s; text-align: center; padding-bottom: 20px; }
-        .acc-card:hover { transform: translateY(-10px); }
-        .acc-card img { width: 100%; height: 200px; object-fit: cover; }
         
-        .price { color: #e74c3c; font-size: 1.5rem; font-weight: bold; margin: 15px 0; }
-        .btn-buy { display: inline-block; width: 80%; padding: 12px; background: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        /* HEADER DROPDOWN GIỐNG ẢNH CỦA CẬU */
+        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; }
+        .user-dropdown { position: relative; display: inline-block; }
+        .user-btn { background: white; border: 1px solid #eee; padding: 5px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; border: 2px solid #007bff; }
         
-        .btn-logout { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 280px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 15px; }
+        .dropdown-content.show { display: block; }
+        .dropdown-content h4 { margin: 0 0 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .history-item { font-size: 0.85rem; padding: 10px; border-bottom: 1px dashed #eee; text-align: left; }
+        
+        /* DANH SÁCH ACC */
+        .acc-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 20px; }
+        .acc-card { background: white; width: 320px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; padding-bottom: 20px; }
+        .acc-card img { width: 100%; height: 180px; object-fit: cover; }
+        .price { color: #e74c3c; font-size: 1.5rem; font-weight: bold; margin: 10px 0; }
+        .btn-buy { background: #28a745; color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+        /* MODAL HIỆN ACC SAU KHI MUA */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; }
+        .acc-box { background: #f0f7ff; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #007bff; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2 onclick="location.href='trangchu.html'">TranvietanhShop</h2>
+        <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
-        <p class="active" onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
-        <p onclick="location.href='robux.html'">💎 Mua Robux</p>
-        <hr style="border-color: #444">
-        <p onclick="window.open('https://zalo.me/0886272568', '_blank')">💬 Liên Hệ Admin</p>
+        <p style="background: #007bff; color: white;">⚔️ Acc Blox Fruit</p>
+        <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
     </div>
 
     <div class="main">
-        <div class="banner-container">
-            <img src="banner.png" alt="Banner" class="shop-banner">
-        </div>
-
         <div class="user-header">
-            <div id="userArea">Đang kiểm tra...</div>
-            <button class="btn-logout" onclick="thoat()">Thoát Shop</button>
+            <div class="user-dropdown">
+                <div class="user-btn" onclick="toggleMenu()">
+                    <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
+                    <div style="text-align: left;">
+                        <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.9rem;">Sếp VietAnh</span>
+                        <span id="userBalance" style="color:red; font-size:0.8rem;">0 đ</span>
+                    </div>
+                </div>
+                <div id="myDropdown" class="dropdown-content">
+                    <h4>🆔 Thông tin</h4>
+                    <p>ID: <b id="displayID">#0000</b></p>
+                    <p>Ngày tham gia: 12/05/2026</p>
+                    <hr>
+                    <h4>🛒 Lịch sử mua Acc</h4>
+                    <div id="buyHistory">Chưa mua acc nào.</div>
+                    <hr>
+                    <p style="color:red; cursor:pointer; font-weight:bold;" onclick="thoat()">↪ Đăng xuất</p>
+                </div>
+            </div>
         </div>
 
-        <h2 class="title">DANH SÁCH ACC BLOX FRUIT</h2>
+        <h2 style="text-align: center; font-size: 2rem;">DANH SÁCH ACC BLOX FRUIT</h2>
 
         <div class="acc-list">
             <div class="acc-card">
-                <img src="acc1.png" onerror="this.src='https://via.placeholder.com/320x200?text=Anh+Acc+1'">
-                <div style="padding: 15px;">
-                    <h3>Acc Blox Fruit #01</h3>
-                    <p style="color: #666;">Max Level, Godhuman, Soul Guitar...</p>
-                    <div class="price">100,000đ</div>
-                    <a href="https://zalo.me/0886272568" class="btn-buy">MUA NGAY</a>
-                </div>
+                <img src="acc1.png" onerror="this.src='https://via.placeholder.com/320x180?text=Acc+Vip'">
+                <h3>Acc Blox Fruit #01</h3>
+                <p>Max Level, Godhuman, CDK</p>
+                <div class="price">100,000đ</div>
+                <button class="btn-buy" onclick="buyAcc('Acc #01', 'vietanh_pro123', 'pass123456', 100000)">MUA NGAY</button>
             </div>
         </div>
     </div>
 
-    <script>
-        function checkStatus() {
-            const userArea = document.getElementById("userArea");
-            const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-            const currentUser = localStorage.getItem("currentUser");
-            const users = JSON.parse(localStorage.getItem("users")) || [];
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #28a745;">MUA THÀNH CÔNG!</h2>
+            <p>Thông tin tài khoản của cậu:</p>
+            <div class="acc-box">
+                <p>Tài khoản: <b id="resUser"></b></p>
+                <p>Mật khẩu: <b id="resPass"></b></p>
+            </div>
+            <p style="font-size: 0.8rem; color: #666;">Thông tin đã được lưu vào Lịch sử mua hàng.</p>
+            <button class="btn-buy" onclick="closeModal()">ĐÓNG</button>
+        </div>
+    </div>
 
-            if (loggedIn && currentUser) {
-                // Lấy ID từ dữ liệu đã lưu
-                const data = users[0] || { userId: "????" };
-                userArea.innerHTML = `Chào cậu, <span style="color:#007bff; font-weight:bold;">${currentUser}</span> <span class="id-badge">ID: #${data.userId}</span>`;
-            } else {
-                // Nếu chưa đăng nhập mà đòi vào đây thì đuổi về trang chủ
-                alert("Cậu chưa đăng nhập hoặc đã thoát rồi!");
-                location.href = "trangchu.html";
+    <script>
+        function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
+
+        // HÀM MUA ACC VÀ HIỆN TK/MK
+        function buyAcc(name, tk, mk, gia) {
+            const confirmBuy = confirm("Cậu có chắc chắn muốn mua " + name + " với giá " + gia + "đ không?");
+            if (confirmBuy) {
+                // Hiện Modal thông tin acc
+                document.getElementById("resUser").innerText = tk;
+                document.getElementById("resPass").innerText = mk;
+                document.getElementById("resultModal").style.display = "flex";
+
+                // Lưu vào lịch sử (LocalStorage)
+                const history = JSON.parse(localStorage.getItem("buyHistory") || "[]");
+                const newItem = {
+                    time: new Date().toLocaleString(),
+                    name: name,
+                    tk: tk,
+                    mk: mk
+                };
+                history.push(newItem);
+                localStorage.setItem("buyHistory", JSON.stringify(history));
+                
+                loadHistory(); // Cập nhật lại menu dropdown
             }
         }
 
-        function thoat() {
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("currentUser");
-            localStorage.removeItem("users");
-            alert("Đã đăng xuất thành công!");
-            location.href = "trangchu.html";
+        function closeModal() { document.getElementById("resultModal").style.display = "none"; }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem("buyHistory") || "[]");
+            const box = document.getElementById("buyHistory");
+            if(history.length > 0) {
+                box.innerHTML = history.map(item => `
+                    <div class="history-item">
+                        <b>${item.name}</b><br>
+                        <small>${item.time}</small><br>
+                        TK: ${item.tk} | MK: ${item.mk}
+                    </div>
+                `).join('');
+            }
         }
 
-        // Chạy ngay khi load trang
+        function checkStatus() {
+            const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = localStorage.getItem("currentUser");
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            if (loggedIn && currentUser) {
+                const data = users[0] || { userId: "0000" };
+                document.getElementById("userNameHeader").innerText = currentUser;
+                document.getElementById("displayID").innerText = "#" + data.userId;
+                loadHistory();
+            } else {
+                location.href = "dashboard.html";
+            }
+        }
+
+        function thoat() { localStorage.clear(); location.href = "trangchu.html"; }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-btn') && !event.target.closest('.user-btn')) {
+                document.getElementById("myDropdown").classList.remove("show");
+            }
+        }
+
         checkStatus();
     </script>
 </body>
