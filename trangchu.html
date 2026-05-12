@@ -4,138 +4,117 @@
     <meta charset="UTF-8">
     <title>Trang Chủ - TranvietanhShop</title>
     <style>
-        /* Giao diện tổng thể */
+        /* CSS ĐỒNG BỘ VỚI TRANG ACC */
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
         
-        /* Thanh Menu bên trái */
+        /* SIDEBAR ĐEN BÊN TRÁI */
         .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; color: white; text-align: center; margin-bottom: 30px; font-size: 1.5rem; }
-        .sidebar p { 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-        }
-        .sidebar p:hover { 
-            background: #3d444b; 
-            padding-left: 20px; 
-            color: #007bff;
-        }
-        .sidebar p.active { background: #007bff; color: white; }
+        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; color: #007bff; font-size: 1.5rem; }
+        .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
+        .sidebar p:hover { background: #3d444b; color: #007bff; }
+        .active { background: #007bff !important; color: white !important; }
 
-        /* Nội dung chính */
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
         
-        /* FIX BANNER: Hiện đầy đủ 100% ảnh */
-        .banner-container {
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: #212529; /* Nền tối để tôn ảnh lên */
-        }
-        .shop-banner {
-            width: 100%;
-            height: auto; /* Tự động co giãn theo chiều cao thật của ảnh */
-            display: block;
-            object-fit: contain; /* Đảm bảo toàn bộ ảnh hiện ra, không bị cắt mép */
-        }
-
-        /* Thanh Header (Tên + ID) */
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: white; 
-            padding: 15px 25px; 
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-            margin-bottom: 20px;
-        }
-        .id-badge { 
-            color: #007bff; 
-            font-weight: bold; 
-            margin-left: 10px; 
-            background: #e7f1ff; 
-            padding: 4px 10px; 
-            border-radius: 6px; 
-            border: 1px solid #b3d7ff; 
-        }
-
-        /* Nút bấm */
-        .btn { padding: 10px 25px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; text-decoration: none; transition: 0.3s; display: inline-block; }
-        .btn-logout { background: #dc3545; color: white; }
+        /* HEADER DROPDOWN GÓC PHẢI */
+        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
+        .user-dropdown { position: relative; display: inline-block; }
+        .user-btn { background: white; border: 1px solid #eee; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; border: 2px solid #007bff; }
+        
+        .dropdown-content { display: none; position: absolute; right: 0; top: 55px; background: white; min-width: 280px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; padding: 20px; border: 1px solid #eee; }
+        .dropdown-content.show { display: block; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+        
+        /* NỘI DUNG CHÍNH */
+        .welcome-box { background: white; padding: 50px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 50px; }
+        .welcome-box h1 { font-size: 2.5rem; color: #333; margin-bottom: 10px; }
+        .welcome-box p { color: #666; font-size: 1.1rem; margin-bottom: 30px; }
+        
+        .btn-container { display: flex; justify-content: center; gap: 20px; }
+        .btn-main { padding: 15px 40px; border-radius: 12px; font-weight: bold; text-decoration: none; font-size: 1.1rem; transition: 0.3s; }
         .btn-blue { background: #007bff; color: white; }
         .btn-green { background: #28a745; color: white; }
-
-        /* Khung nội dung */
-        .card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        .btn-main:hover { transform: translateY(-5px); opacity: 0.9; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2 onclick="location.href='trangchu.html'">TranvietanhShop</h2>
+        <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
         <p class="active" onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
         <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
-        <p onclick="location.href='robux.html'">💎 Mua Robux</p>
+        <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
         <hr style="border-color: #444">
-        <p onclick="window.open('https://zalo.me/0886272568', '_blank')">💬 Liên Hệ Admin</p>
+        <p onclick="window.open('https://zalo.me/0886272568')">💬 Liên Hệ Admin</p>
     </div>
 
     <div class="main">
-        <div class="banner-container">
-            <img src="banner.png" alt="Banner Shop" class="shop-banner">
+        <div class="user-header">
+            <div class="user-dropdown">
+                <div class="user-btn" onclick="toggleMenu()">
+                    <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
+                    <div style="text-align: left;">
+                        <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.9rem;">Khách</span>
+                        <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span>
+                    </div>
+                    <span style="margin-left:12px; font-size: 0.7rem;">▼</span>
+                </div>
+                <div id="myDropdown" class="dropdown-content">
+                    <h4 style="margin:0 0 10px; color:#333;">🆔 THÔNG TIN</h4>
+                    <p style="display:flex; justify-content:space-between; margin:5px 0;">ID: <b id="displayID">#0000</b></p>
+                    <hr style="border: 0.5px solid #eee;">
+                    <p style="color:red; cursor:pointer; font-weight:bold; margin-top:10px;" onclick="thoat()">↪ ĐĂNG XUẤT</p>
+                </div>
+            </div>
         </div>
 
-        <div class="header">
-            <div id="userArea"></div>
-            <div id="btnArea"></div>
-        </div>
-
-        <div class="card">
-            <h2 style="color: #212529;">Chào mừng đến với Shop của Việt Anh!</h2>
-            <p style="color: #666;">Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín.</p>
-            <hr>
-            <div style="margin-top: 25px;">
-                <button class="btn btn-blue" onclick="location.href='acc-blox-fruit.html'" style="margin-right: 15px;">Vào Shop Acc</button>
-                <button class="btn btn-green" onclick="location.href='robux.html'">Nạp Robux Ngay</button>
+        <div class="welcome-box">
+            <h1>Chào mừng đến với Shop của Việt Anh!</h1>
+            <p>Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín và nhanh chóng.</p>
+            
+            <div class="btn-container">
+                <a href="acc-blox-fruit.html" class="btn-main btn-blue">Vào Shop Acc</a>
+                <a href="naptien.html" class="btn-main btn-green">Nạp Thẻ Ngay</a>
             </div>
         </div>
     </div>
 
     <script>
+        function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
+
         function checkStatus() {
-            const userArea = document.getElementById("userArea");
-            const btnArea = document.getElementById("btnArea");
-            
             const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-            const currentU = localStorage.getItem("currentUser");
+            const currentUser = localStorage.getItem("currentUser");
             const users = JSON.parse(localStorage.getItem("users")) || [];
-
-            if (loggedIn && currentU) {
-                const data = users.find(u => u.username === currentU);
-                const id = data ? data.userId : "0000";
-
-                userArea.innerHTML = `Chào cậu, <span style="color:#007bff">${currentU}</span> <span class="id-badge">ID: #${id}</span>`;
-                btnArea.innerHTML = `<button class="btn btn-logout" onclick="thoat()">Thoát Shop</button>`;
+            
+            if (loggedIn && currentUser) {
+                // Lấy thông tin từ mảng users dựa trên username (dùng dữ liệu thật từ ảnh sếp gửi)
+                const userData = users.find(u => u.username === currentUser) || users[0] || { userId: "0000" };
+                document.getElementById("userNameHeader").innerText = currentUser;
+                document.getElementById("displayID").innerText = "#" + (userData.userId || "0000");
             } else {
-                userArea.innerHTML = `<span style="color:#888">Khách vãng lai</span>`;
-                btnArea.innerHTML = `<a href="dashboard.html" class="btn btn-blue">Đăng Nhập</a>`;
+                // Nếu chưa đăng nhập thì bắt quay về trang login
+                location.href = "dashboard.html";
             }
         }
 
-        function thoat() {
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("currentUser");
-            location.reload(); 
+        function thoat() { 
+            if(confirm("Sếp muốn đăng xuất thật à?")) {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("currentUser");
+                location.href = "dashboard.html"; 
+            }
         }
 
+        // Đóng menu khi bấm ra ngoài
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-btn') && !event.target.closest('.user-btn')) {
+                document.getElementById("myDropdown").classList.remove("show");
+            }
+        }
+        
+        // Chạy hàm kiểm tra ngay khi load trang
         checkStatus();
     </script>
 </body>
