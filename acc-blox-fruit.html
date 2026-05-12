@@ -2,38 +2,40 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Cửa Hàng Acc - TranvietanhShop</title>
+    <title>Siêu Phẩm Blox Fruit - TranvietanhShop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
         .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; margin-bottom: 30px; }
+        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; color: #007bff; }
         .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
         .sidebar p:hover { background: #3d444b; color: #007bff; }
-        
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
         
-        /* HEADER DROPDOWN GIỐNG ẢNH CỦA CẬU */
-        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; }
+        /* USER MENU DROPDOWN */
+        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
         .user-dropdown { position: relative; display: inline-block; }
-        .user-btn { background: white; border: 1px solid #eee; padding: 5px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; border: 2px solid #007bff; }
-        
-        .dropdown-content { display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 280px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 15px; }
-        .dropdown-content.show { display: block; }
-        .dropdown-content h4 { margin: 0 0 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .history-item { font-size: 0.85rem; padding: 10px; border-bottom: 1px dashed #eee; text-align: left; }
-        
-        /* DANH SÁCH ACC */
-        .acc-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 20px; }
-        .acc-card { background: white; width: 320px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; padding-bottom: 20px; }
-        .acc-card img { width: 100%; height: 180px; object-fit: cover; }
-        .price { color: #e74c3c; font-size: 1.5rem; font-weight: bold; margin: 10px 0; }
-        .btn-buy { background: #28a745; color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .user-btn { background: white; border: 1px solid #eee; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; border: 2px solid #007bff; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 55px; background: white; min-width: 280px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; padding: 20px; }
+        .dropdown-content.show { display: block; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+        .history-item { font-size: 0.85rem; padding: 10px; border-bottom: 1px dashed #eee; text-align: left; background: #fffcf5; margin-bottom: 5px; border-radius: 5px; }
 
-        /* MODAL HIỆN ACC SAU KHI MUA */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 350px; text-align: center; }
-        .acc-box { background: #f0f7ff; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #007bff; }
+        /* DANH SÁCH ACC CĂN GIỮA */
+        .title { text-align: center; font-size: 2.2rem; font-weight: bold; margin-bottom: 40px; color: #333; }
+        .acc-list { display: flex; justify-content: center; }
+        .acc-card { background: white; width: 400px; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.1); text-align: center; padding-bottom: 30px; position: relative; }
+        .tag-hot { background: linear-gradient(to right, #ff416c, #ff4b2b); color: white; padding: 5px 15px; border-radius: 0 0 15px 0; font-weight: bold; position: absolute; top: 0; left: 0; }
+        .acc-card img { width: 100%; height: 250px; object-fit: cover; }
+        .price { color: #e74c3c; font-size: 2.2rem; font-weight: bold; margin: 20px 0; }
+        .btn-buy { background: #28a745; color: white; border: none; padding: 15px 50px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .btn-buy:hover { background: #218838; transform: scale(1.05); }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 400px; text-align: center; animation: zoom 0.3s; }
+        @keyframes zoom { from {transform: scale(0.5);} to {transform: scale(1);} }
+        .acc-box { background: #f0f7ff; padding: 20px; border-radius: 12px; margin: 20px 0; border: 2px solid #007bff; text-align: left; }
     </style>
 </head>
 <body>
@@ -43,6 +45,8 @@
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
         <p style="background: #007bff; color: white;">⚔️ Acc Blox Fruit</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
+        <hr style="border-color: #444">
+        <p onclick="window.open('https://zalo.me/0886272568')">💬 Liên Hệ Admin</p>
     </div>
 
     <div class="main">
@@ -52,72 +56,69 @@
                     <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
                     <div style="text-align: left;">
                         <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.9rem;">Sếp VietAnh</span>
-                        <span id="userBalance" style="color:red; font-size:0.8rem;">0 đ</span>
+                        <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span>
                     </div>
+                    <span style="margin-left:12px; font-size: 0.7rem;">▼</span>
                 </div>
                 <div id="myDropdown" class="dropdown-content">
-                    <h4>🆔 Thông tin</h4>
-                    <p>ID: <b id="displayID">#0000</b></p>
-                    <p>Ngày tham gia: 12/05/2026</p>
-                    <hr>
-                    <h4>🛒 Lịch sử mua Acc</h4>
-                    <div id="buyHistory">Chưa mua acc nào.</div>
-                    <hr>
-                    <p style="color:red; cursor:pointer; font-weight:bold;" onclick="thoat()">↪ Đăng xuất</p>
+                    <h4>🆔 THÔNG TIN</h4>
+                    <p style="display:flex; justify-content:space-between;">ID: <b id="displayID">#0000</b></p>
+                    <hr style="border: 0.5px solid #eee;">
+                    <h4>🛒 LỊCH SỬ MUA ACC</h4>
+                    <div id="buyHistory" style="max-height: 200px; overflow-y: auto;">Chưa mua acc nào.</div>
+                    <hr style="border: 0.5px solid #eee;">
+                    <p style="color:red; cursor:pointer; font-weight:bold; margin-top:10px;" onclick="thoat()">↪ ĐĂNG XUẤT</p>
                 </div>
             </div>
         </div>
 
-        <h2 style="text-align: center; font-size: 2rem;">DANH SÁCH ACC BLOX FRUIT</h2>
+        <h2 class="title">SIÊU PHẨM DUY NHẤT HÔM NAY</h2>
 
         <div class="acc-list">
             <div class="acc-card">
-                <img src="acc1.png" onerror="this.src='https://via.placeholder.com/320x180?text=Acc+Vip'">
-                <h3>Acc Blox Fruit #01</h3>
-                <p>Max Level, Godhuman, CDK</p>
-                <div class="price">100,000đ</div>
-                <button class="btn-buy" onclick="buyAcc('Acc#01', 'MaryCurtis932', 'MTN627777227', 100000)">MUA NGAY</button>
+                <div class="tag-hot">HOT SALE</div>
+                <img src="acc1.png" onerror="this.src='https://via.placeholder.com/400x250?text=Blox+Fruit+VIP+Max'">
+                <div style="padding: 20px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Acc Blox Fruit Siêu Cấp #01</h3>
+                    <div style="text-align: left; background: #fafafa; padding: 15px; border-radius: 10px; font-size: 0.95rem; line-height: 1.8;">
+                        🔥 <b>Level:</b> Max (2800)<br>
+                        🔥 <b>Melee:</b> God Human (Full Skill)<br>
+                        🔥 <b>Tộc:</b> V4 (Đã lên 1 Gear cực mạnh)<br>
+                        🔥 <b>Kiếm:</b> Cursed Dual Katana (CDK)<br>
+                        🔥 <b>Súng:</b> Skull Guitar VIP
+                    </div>
+                    <div class="price">70,000đ</div>
+                    <button class="btn-buy" onclick="buyAcc('Acc VIP #01', 'MaryCurtis932', 'TVA627777227', 70000)">MUA NGAY</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="resultModal" class="modal">
         <div class="modal-content">
-            <h2 style="color: #28a745;">MUA THÀNH CÔNG!</h2>
-            <p>Thông tin tài khoản của cậu:</p>
+            <h2 style="color: #28a745; margin-top: 0;">GIAO DỊCH HOÀN TẤT!</h2>
             <div class="acc-box">
-                <p>Tài khoản: <b id="resUser"></b></p>
-                <p>Mật khẩu: <b id="resPass"></b></p>
+                <p>👤 Tài khoản: <b id="resUser" style="color:blue"></b></p>
+                <p>🔑 Mật khẩu: <b id="resPass" style="color:blue"></b></p>
             </div>
-            <p style="font-size: 0.8rem; color: #666;">Thông tin đã được lưu vào Lịch sử mua hàng.</p>
-            <button class="btn-buy" onclick="closeModal()">ĐÓNG</button>
+            <p style="font-size: 0.8rem; color: #888;">⚠️ Hãy đổi mật khẩu ngay để bảo mật. Thông tin đã được lưu vào <b>Lịch sử mua hàng</b> ở Menu góc phải.</p>
+            <button class="btn-buy" style="background:#007bff; margin-top:10px; width:100%;" onclick="closeModal()">ĐÓNG</button>
         </div>
     </div>
 
     <script>
         function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
 
-        // HÀM MUA ACC VÀ HIỆN TK/MK
         function buyAcc(name, tk, mk, gia) {
-            const confirmBuy = confirm("Cậu có chắc chắn muốn mua " + name + " với giá " + gia + "đ không?");
-            if (confirmBuy) {
-                // Hiện Modal thông tin acc
+            if (confirm("Sếp chắc chắn muốn chốt đơn siêu phẩm " + name + " này chứ?")) {
                 document.getElementById("resUser").innerText = tk;
                 document.getElementById("resPass").innerText = mk;
                 document.getElementById("resultModal").style.display = "flex";
 
-                // Lưu vào lịch sử (LocalStorage)
-                const history = JSON.parse(localStorage.getItem("buyHistory") || "[]");
-                const newItem = {
-                    time: new Date().toLocaleString(),
-                    name: name,
-                    tk: tk,
-                    mk: mk
-                };
-                history.push(newItem);
+                let history = JSON.parse(localStorage.getItem("buyHistory") || "[]");
+                history.push({ time: new Date().toLocaleString(), name: name, tk: tk, mk: mk });
                 localStorage.setItem("buyHistory", JSON.stringify(history));
-                
-                loadHistory(); // Cập nhật lại menu dropdown
+                loadHistory();
             }
         }
 
@@ -127,11 +128,10 @@
             const history = JSON.parse(localStorage.getItem("buyHistory") || "[]");
             const box = document.getElementById("buyHistory");
             if(history.length > 0) {
-                box.innerHTML = history.map(item => `
+                box.innerHTML = history.reverse().map(item => `
                     <div class="history-item">
-                        <b>${item.name}</b><br>
-                        <small>${item.time}</small><br>
-                        TK: ${item.tk} | MK: ${item.mk}
+                        <b style="color:#007bff">${item.name}</b> <br>
+                        TK: <b>${item.tk}</b> | MK: <b>${item.mk}</b>
                     </div>
                 `).join('');
             }
@@ -146,19 +146,21 @@
                 document.getElementById("userNameHeader").innerText = currentUser;
                 document.getElementById("displayID").innerText = "#" + data.userId;
                 loadHistory();
-            } else {
-                location.href = "dashboard.html";
-            }
+            } else { location.href = "dashboard.html"; }
         }
 
-        function thoat() { localStorage.clear(); location.href = "trangchu.html"; }
+        function thoat() { 
+            if(confirm("Sếp muốn đăng xuất thật à?")) {
+                localStorage.clear(); 
+                location.href = "trangchu.html"; 
+            }
+        }
 
         window.onclick = function(event) {
             if (!event.target.matches('.user-btn') && !event.target.closest('.user-btn')) {
                 document.getElementById("myDropdown").classList.remove("show");
             }
         }
-
         checkStatus();
     </script>
 </body>
