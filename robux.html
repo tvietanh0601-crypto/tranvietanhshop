@@ -2,33 +2,20 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Nạp Robux - TranvietanhShop</title>
+    <title>Nạp Robux - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; color: #007bff; }
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
         .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; color: #007bff; }
-        
+        .sidebar p:hover { background: #3d444b; }
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        
-        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
-        .user-btn { background: white; padding: 5px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 10px; border: 2px solid #007bff; }
-        
-        .robux-container { background: white; padding: 30px; border-radius: 20px; max-width: 600px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .user-btn { background: white; padding: 5px 15px; border-radius: 50px; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .robux-container { background: white; padding: 30px; border-radius: 20px; max-width: 600px; margin: auto; text-align: center; }
         .package-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .package { border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .package:hover, .package.active { border-color: #007bff; background: #f0f7ff; }
-        .package h4 { margin: 0; color: #007bff; }
-        .package p { margin: 5px 0 0; font-weight: bold; color: #e74c3c; }
-        
-        input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .btn-buy { background: #ffc107; color: #000; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
-        .btn-buy:hover { background: #e0a800; transform: scale(1.02); }
-        .btn-buy:disabled { background: #ccc; cursor: not-allowed; }
-        
-        #loading { display: none; color: #007bff; font-weight: bold; margin-top: 15px; }
+        .package { border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; }
+        .package.active { border-color: #007bff; background: #f0f7ff; }
     </style>
 </head>
 <body>
@@ -39,110 +26,50 @@
         <p style="background: #007bff; color: white;">💎 Nạp Robux</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
     </div>
-
     <div class="main">
         <div class="user-header">
             <div class="user-btn">
-                <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
-                <div style="text-align: left;">
-                    <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.9rem;">Đang tải...</span>
-                    <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span>
-                </div>
+                <img src="https://i.imgur.com/v6SQUC9.png" width="35" style="border-radius:50%; margin-right:10px;">
+                <div><span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span><span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span></div>
             </div>
         </div>
-
         <div class="robux-container">
-            <h2>💎 MUA ROBUX CHÍNH HÃNG</h2>
+            <h2>MUA ROBUX</h2>
             <div class="package-list">
                 <div class="package" onclick="selectPkg(this, 80, 20000)"><h4>80 Robux</h4><p>20,000 đ</p></div>
                 <div class="package" onclick="selectPkg(this, 400, 100000)"><h4>400 Robux</h4><p>100,000 đ</p></div>
-                <div class="package" onclick="selectPkg(this, 800, 200000)"><h4>800 Robux</h4><p>200,000 đ</p></div>
-                <div class="package" onclick="selectPkg(this, 1700, 400000)"><h4>1700 Robux</h4><p>400,000 đ</p></div>
             </div>
-            <input type="text" id="robloxUser" placeholder="Nhập tên nhân vật Roblox">
-            <button class="btn-buy" id="btnBuy" onclick="buyRobux()">MUA NGAY</button>
-            <div id="loading">🔄 Đang xử lý đơn hàng...</div>
+            <input type="text" id="robloxUser" placeholder="Tên nhân vật Roblox" style="width:100%; padding:12px; margin:20px 0; border-radius:8px; border:1px solid #ddd;">
+            <button onclick="buyRobux()" style="width:100%; padding:15px; background:#ffc107; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">MUA NGAY</button>
         </div>
     </div>
-
     <script>
-        let selectedPrice = 0;
-        let selectedAmount = 0;
-
-        function selectPkg(el, amount, price) {
-            document.querySelectorAll('.package').forEach(p => p.classList.remove('active'));
-            el.classList.add('active');
-            selectedAmount = amount;
-            selectedPrice = price;
-        }
-
+        let selectedPrice = 0, selectedAmount = 0;
+        function selectPkg(el, amount, price) { document.querySelectorAll('.package').forEach(p => p.classList.remove('active')); el.classList.add('active'); selectedAmount = amount; selectedPrice = price; }
         async function checkStatus() {
-            const user = localStorage.getItem("currentUser") || "Khách";
+            const user = localStorage.getItem("currentUser");
             document.getElementById("userNameHeader").innerText = user;
             try {
+                // THAY API CỦA SẾP TẠI ĐÂY
                 const response = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu");
                 const data = await response.json();
-                
-                // Lọc thẻ đã duyệt (cộng tiền) và đơn robux đã duyệt (trừ tiền)
-                const history = data.filter(item => item.username === user && item.status === "Đã duyệt");
-                
-                let tong = 0;
-                history.forEach(item => {
-                    tong += parseInt(item.menhGia);
-                });
-                
+                const list = data.filter(i => i.username.trim() === user.trim() && i.status.trim().toLowerCase() === "đã duyệt");
+                let tong = 0; list.forEach(t => tong += parseInt(t.menhGia || 0));
                 document.getElementById("userBalance").innerText = tong.toLocaleString() + " đ";
                 localStorage.setItem("userBalance", tong);
-            } catch (e) {
-                document.getElementById("userBalance").innerText = "0 đ";
-            }
+            } catch (e) { }
         }
-
         async function buyRobux() {
-            const robloxUser = document.getElementById("robloxUser").value;
+            const rUser = document.getElementById("robloxUser").value;
             const user = localStorage.getItem("currentUser");
-            let balance = parseInt(localStorage.getItem("userBalance") || 0);
-
-            if (!selectedAmount) return alert("Sếp chưa chọn gói Robux!");
-            if (!robloxUser) return alert("Sếp quên nhập tên nhân vật rồi!");
-            if (balance < selectedPrice) return alert("Không đủ tiền sếp ơi!");
-
-            if (confirm(`Xác nhận mua ${selectedAmount} Robux giá ${selectedPrice.toLocaleString()}đ?`)) {
-                document.getElementById("loading").style.display = "block";
-                document.getElementById("btnBuy").disabled = true;
-
-                const order = { data: [{ 
-                    username: user, 
-                    nhaMang: "MUA_ROBUX", 
-                    menhGia: "-" + selectedPrice, // Lưu dấu trừ để sếp biết đây là đơn trừ tiền
-                    seri: robloxUser, 
-                    maNap: selectedAmount + " Robux", 
-                    status: "Chờ duyệt", // Khi sếp sửa thành "Đã duyệt" thì tiền sẽ trừ vĩnh viễn trên Sheets
-                    ngayNap: new Date().toLocaleString() 
-                }]};
-
-                try {
-                    await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9", { 
-                        method: 'POST', 
-                        headers: {'Content-Type': 'application/json'}, 
-                        body: JSON.stringify(order) 
-                    });
-
-                    // CẬP NHẬT TRỪ TIỀN TẠM THỜI TRÊN WEB
-                    let newBal = balance - selectedPrice;
-                    localStorage.setItem("userBalance", newBal);
-                    document.getElementById("userBalance").innerText = newBal.toLocaleString() + " đ";
-
-                    alert("Gửi đơn thành công! Tiền đã được trừ, sếp đợi Admin nạp Robux nhé.");
-                    location.reload();
-                } catch (e) {
-                    alert("Lỗi kết nối sếp ơi!");
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("btnBuy").disabled = false;
-                }
+            let bal = parseInt(localStorage.getItem("userBalance") || 0);
+            if (!selectedAmount || !rUser || bal < selectedPrice) return alert("Kiểm tra lại thông tin hoặc số dư!");
+            if (confirm("Mua Robux?")) {
+                const order = { data: [{ username: user, nhaMang: "MUA_ROBUX", menhGia: "-" + selectedPrice, seri: rUser, maNap: selectedAmount + " Robux", status: "Chờ duyệt", ngayNap: new Date().toLocaleString() }] };
+                await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9", { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order) });
+                alert("Đã gửi đơn!"); location.reload();
             }
         }
-
         checkStatus();
     </script>
 </body>
