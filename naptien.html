@@ -2,25 +2,18 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Nạp Thẻ Cào - TranvietanhShop</title>
+    <title>Nạp Thẻ - TranvietanhShop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
         .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
+        .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
+        .sidebar p:hover { background: #3d444b; }
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        
-        .nap-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto; }
-        h2 { text-align: center; color: #333; }
-        
-        label { display: block; margin-top: 15px; font-weight: bold; color: #555; }
-        select, input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        
-        .btn-nap { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 1.1rem; }
-        .btn-nap:disabled { background: #ccc; cursor: not-allowed; }
-
-        /* Hiệu ứng chờ */
-        #loadingArea { display: none; margin-top: 20px; text-align: center; padding: 20px; border: 2px dashed #007bff; border-radius: 10px; background: #f0f7ff; }
-        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .nap-box { background: white; padding: 30px; border-radius: 20px; max-width: 500px; margin: 50px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-nap { background: #28a745; color: white; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        #loading { display: none; text-align: center; margin-top: 15px; color: #007bff; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -28,73 +21,70 @@
         <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
         <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
-        <p style="background: #28a745; color: white;">💳 Nạp Thẻ Cào</p>
+        <p style="background: #007bff; color: white;">💳 Nạp Thẻ Cào</p>
     </div>
 
     <div class="main">
-        <div class="nap-container">
-            <h2>HỆ THỐNG NẠP THẺ TỰ ĐỘNG</h2>
-            
-            <label>Chọn Nhà Mạng</label>
+        <div class="nap-box">
+            <h2 style="text-align: center;">HỆ THỐNG NẠP THẺ</h2>
+            <p style="font-size: 0.8rem; color: red; text-align: center;">* Vui lòng nhập đúng mệnh giá, sai sẽ bị mất thẻ!</p>
             <select id="nhaMang">
                 <option value="Viettel">Viettel</option>
                 <option value="Vinaphone">Vinaphone</option>
                 <option value="Mobifone">Mobifone</option>
-                <option value="Zing">Zing</option>
+                <option value="Zing">Thẻ Zing</option>
             </select>
-
-            <label>Chọn Mệnh Giá</label>
             <select id="menhGia">
-                <option value="10000">10,000đ</option>
-                <option value="20000">20,000đ</option>
-                <option value="50000">50,000đ</option>
-                <option value="100000">100,000đ</option>
-                <option value="200000">200,000đ</option>
-                <option value="500000">500,000đ</option>
-                <option value="1000000">1,000,000đ</option>
+                <option value="10000">10,000 đ</option>
+                <option value="20000">20,000 đ</option>
+                <option value="50000">50,000 đ</option>
+                <option value="100000">100,000 đ</option>
+                <option value="200000">20,000 đ</option>
+                <option value="500000">500,000 đ</option>
             </select>
-
-            <label>Số Seri</label>
-            <input type="text" id="seri" placeholder="Nhập số seri thẻ">
-
-            <label>Mã Thẻ</label>
-            <input type="text" id="maNap" placeholder="Nhập mã cào dưới lớp bạc">
-
-            <button class="btn-nap" id="btnSubmit" onclick="xuLyNap()">NẠP TIỀN NGAY</button>
-
-            <div id="loadingArea">
-                <div class="spinner"></div>
-                <p>Hệ thống đang kiểm tra thẻ... Vui lòng chờ <b><span id="countdown">30</span> giây</b>.</p>
-                <p style="font-size: 0.8rem; color: #888;">Đừng tắt trang này nhé cậu!</p>
-            </div>
+            <input type="text" id="seri" placeholder="Nhập số Seri">
+            <input type="text" id="maNap" placeholder="Nhập mã thẻ">
+            <button class="btn-nap" onclick="xuLyNap()">NẠP THẺ NGAY</button>
+            <div id="loading">🔄 Đang gửi thẻ lên hệ thống...</div>
         </div>
     </div>
 
     <script>
-        function xuLyNap() {
+        async function xuLyNap() {
+            const user = localStorage.getItem("currentUser");
+            const nhaMang = document.getElementById("nhaMang").value;
+            const menhGia = document.getElementById("menhGia").value;
             const seri = document.getElementById("seri").value;
-            const ma = document.getElementById("maNap").value;
-            if(!seri || !ma) return alert("Cậu nhập đủ Seri và Mã thẻ nhé!");
+            const maNap = document.getElementById("maNap").value;
 
-            // Hiện màn hình chờ
-            document.getElementById("btnSubmit").disabled = true;
-            document.getElementById("loadingArea").style.display = "block";
-            
-            let timeLeft = 30; // 30 giây chờ
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById("countdown").innerText = timeLeft;
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    hoanThanh();
-                }
-            }, 1000);
-        }
+            if(!seri || !maNap) return alert("Nhập đủ thông tin sếp ơi!");
 
-        function hoanThanh() {
-            alert("Nạp thẻ thành công! Tiền đã được cộng vào tài khoản của cậu.");
-            // Ở level này tớ tạm thời alert, sau này mình sẽ cộng tiền thật vào file Excel/Sheets của cậu
-            location.href = "trangchu.html";
+            document.getElementById("loading").style.display = "block";
+
+            const dataSend = {
+                data: [{
+                    username: user,
+                    nhaMang: nhaMang,
+                    menhGia: menhGia,
+                    seri: seri,
+                    maNap: maNap,
+                    status: "Chờ duyệt",
+                    ngayNap: new Date().toLocaleString()
+                }]
+            };
+
+            try {
+                // SẾP THAY LINK API CỦA SẾP VÀO ĐÂY
+                await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataSend)
+                });
+                alert("Đã gửi thẻ! Đợi sếp duyệt là có tiền ngay.");
+                location.href = "trangchu.html";
+            } catch (e) {
+                alert("Lỗi rồi sếp!");
+            }
         }
     </script>
 </body>
