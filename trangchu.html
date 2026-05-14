@@ -2,19 +2,20 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang Chủ - TranvietanhShop</title>
+    <title>Trang Chủ - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; color: #007bff; }
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
         .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; color: #007bff; }
+        .sidebar p:hover { background: #3d444b; }
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
-        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; }
         .welcome-box { background: white; padding: 50px; border-radius: 20px; text-align: center; margin-top: 50px; }
-        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
-        .btn-main { padding: 15px 30px; border-radius: 12px; font-weight: bold; text-decoration: none; transition: 0.3s; color: white; }
+        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .btn { padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; }
     </style>
 </head>
 <body>
@@ -28,34 +29,45 @@
     <div class="main">
         <div class="user-header">
             <div class="user-btn">
-                <img src="https://i.imgur.com/v6SQUC9.png" width="35" style="border-radius:50%; margin-right:10px;">
-                <div><span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
-                <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span></div>
+                <img src="https://i.imgur.com/v6SQUC9.png">
+                <div>
+                    <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
+                    <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">Đang check ví...</span>
+                </div>
             </div>
         </div>
         <div class="welcome-box">
             <h1>Chào mừng Sếp đến với Shop!</h1>
-            <p>Chọn dịch vụ sếp cần bên dưới nhé:</p>
             <div class="btn-container">
-                <a href="acc-blox-fruit.html" class="btn-main" style="background: #007bff;">Vào Shop Acc</a>
-                <a href="robux.html" class="btn-main" style="background: #ffc107; color: black;">Nạp Robux</a>
-                <a href="naptien.html" class="btn-main" style="background: #28a745;">Nạp Thẻ Ngay</a>
+                <a href="acc-blox-fruit.html" class="btn" style="background:#007bff">Mua Acc</a>
+                <a href="robux.html" class="btn" style="background:#ffc107; color:black">Mua Robux</a>
             </div>
         </div>
     </div>
     <script>
         async function checkStatus() {
             const user = localStorage.getItem("currentUser");
+            if (!user) return;
             document.getElementById("userNameHeader").innerText = user;
             try {
-                const response = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu");
+                // THAY API CỦA SẾP TẠI ĐÂY
+                const response = await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9");
                 const data = await response.json();
-                const danhSachDuyet = data.filter(item => item.username === user && item.status === "Đã duyệt");
-                let tong = 0; danhSachDuyet.forEach(t => tong += parseInt(t.menhGia));
+                
+                // Lọc bỏ dấu cách thừa ở status và username
+                const listDuyet = data.filter(item => 
+                    item.username.trim() === user.trim() && 
+                    item.status.trim().toLowerCase() === "đã duyệt"
+                );
+
+                let tong = 0;
+                listDuyet.forEach(t => tong += parseInt(t.menhGia || 0));
                 document.getElementById("userBalance").innerText = tong.toLocaleString() + " đ";
-            } catch (e) { }
+                localStorage.setItem("userBalance", tong);
+            } catch (e) { document.getElementById("userBalance").innerText = "Lỗi kết nối"; }
         }
         checkStatus();
+        setInterval(checkStatus, 30000);
     </script>
 </body>
 </html>
