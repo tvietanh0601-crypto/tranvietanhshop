@@ -4,118 +4,69 @@
     <meta charset="UTF-8">
     <title>Trang Chủ - TranvietanhShop</title>
     <style>
-        /* CSS ĐỒNG BỘ VỚI TRANG ACC */
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        
-        /* SIDEBAR ĐEN BÊN TRÁI */
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
-        .sidebar h2 { cursor: pointer; text-align: center; margin-bottom: 30px; color: #007bff; font-size: 1.5rem; }
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
         .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; color: #007bff; }
-        .active { background: #007bff !important; color: white !important; }
-
+        .sidebar p:hover { background: #3d444b; }
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        
-        /* HEADER DROPDOWN GÓC PHẢI */
-        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
-        .user-dropdown { position: relative; display: inline-block; }
-        .user-btn { background: white; border: 1px solid #eee; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; border: 2px solid #007bff; }
-        
-        .dropdown-content { display: none; position: absolute; right: 0; top: 55px; background: white; min-width: 280px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; padding: 20px; border: 1px solid #eee; }
-        .dropdown-content.show { display: block; animation: fadeIn 0.2s; }
-        @keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
-        
-        /* NỘI DUNG CHÍNH */
-        .welcome-box { background: white; padding: 50px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 50px; }
-        .welcome-box h1 { font-size: 2.5rem; color: #333; margin-bottom: 10px; }
-        .welcome-box p { color: #666; font-size: 1.1rem; margin-bottom: 30px; }
-        
-        .btn-container { display: flex; justify-content: center; gap: 20px; }
-        .btn-main { padding: 15px 40px; border-radius: 12px; font-weight: bold; text-decoration: none; font-size: 1.1rem; transition: 0.3s; }
-        .btn-blue { background: #007bff; color: white; }
-        .btn-green { background: #28a745; color: white; }
-        .btn-main:hover { transform: translateY(-5px); opacity: 0.9; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; }
+        .welcome-box { background: white; padding: 50px; border-radius: 20px; text-align: center; margin-top: 50px; }
+        .btn-main { padding: 15px 40px; border-radius: 12px; font-weight: bold; text-decoration: none; margin: 0 10px; display: inline-block; transition: 0.3s; }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
-        <p class="active" onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
+        <p style="background: #007bff; color: white;">🏠 Trang Chủ</p>
         <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
-        <hr style="border-color: #444">
-        <p onclick="window.open('https://zalo.me/0886272568')">💬 Liên Hệ Admin</p>
     </div>
 
     <div class="main">
         <div class="user-header">
-            <div class="user-dropdown">
-                <div class="user-btn" onclick="toggleMenu()">
-                    <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
-                    <div style="text-align: left;">
-                        <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.9rem;">Khách</span>
-                        <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span>
-                    </div>
-                    <span style="margin-left:12px; font-size: 0.7rem;">▼</span>
-                </div>
-                <div id="myDropdown" class="dropdown-content">
-                    <h4 style="margin:0 0 10px; color:#333;">🆔 THÔNG TIN</h4>
-                    <p style="display:flex; justify-content:space-between; margin:5px 0;">ID: <b id="displayID">#0000</b></p>
-                    <hr style="border: 0.5px solid #eee;">
-                    <p style="color:red; cursor:pointer; font-weight:bold; margin-top:10px;" onclick="thoat()">↪ ĐĂNG XUẤT</p>
+            <div class="user-btn">
+                <img src="https://i.imgur.com/v6SQUC9.png">
+                <div>
+                    <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp VietAnh</span>
+                    <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">Đang check ví...</span>
                 </div>
             </div>
         </div>
 
         <div class="welcome-box">
-            <h1>Chào mừng đến với Shop của Việt Anh!</h1>
-            <p>Hệ thống nạp Robux và bán Acc Blox Fruit tự động cực uy tín và nhanh chóng.</p>
-            
-            <div class="btn-container">
-                <a href="acc-blox-fruit.html" class="btn-main btn-blue">Vào Shop Acc</a>
-                <a href="naptien.html" class="btn-main btn-green">Nạp Thẻ Ngay</a>
-            </div>
+            <h1>Chào mừng Sếp đến với Shop!</h1>
+            <p>Hệ thống bán Acc Blox Fruit Max Level cực uy tín.</p>
+            <a href="acc-blox-fruit.html" class="btn-main" style="background: #007bff; color: white;">VÀO SHOP ACC</a>
+            <a href="naptien.html" class="btn-main" style="background: #28a745; color: white;">NẠP TIỀN NGAY</a>
         </div>
     </div>
 
     <script>
-        function toggleMenu() { document.getElementById("myDropdown").classList.toggle("show"); }
+        async function checkDuyetThe() {
+            const user = localStorage.getItem("currentUser");
+            if (!user) return location.href = "dashboard.html";
+            document.getElementById("userNameHeader").innerText = user;
 
-        function checkStatus() {
-            const loggedIn = localStorage.getItem("isLoggedIn") === "true";
-            const currentUser = localStorage.getItem("currentUser");
-            const users = JSON.parse(localStorage.getItem("users")) || [];
-            
-            if (loggedIn && currentUser) {
-                // Lấy thông tin từ mảng users dựa trên username (dùng dữ liệu thật từ ảnh sếp gửi)
-                const userData = users.find(u => u.username === currentUser) || users[0] || { userId: "0000" };
-                document.getElementById("userNameHeader").innerText = currentUser;
-                document.getElementById("displayID").innerText = "#" + (userData.userId || "0000");
-            } else {
-                // Nếu chưa đăng nhập thì bắt quay về trang login
-                location.href = "dashboard.html";
+            try {
+                // SẾP THAY LINK API CỦA SẾP VÀO ĐÂY
+                const response = await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9");
+                const data = await response.json();
+                
+                const danhSachDuyet = data.filter(item => item.username === user && item.status === "Đã duyệt");
+                let tongTien = 0;
+                danhSachDuyet.forEach(the => tongTien += parseInt(the.menhGia));
+
+                localStorage.setItem("userBalance", tongTien);
+                document.getElementById("userBalance").innerText = tongTien.toLocaleString() + " đ";
+            } catch (e) {
+                document.getElementById("userBalance").innerText = "0 đ";
             }
         }
-
-        function thoat() { 
-            if(confirm("Sếp muốn đăng xuất thật à?")) {
-                localStorage.removeItem("isLoggedIn");
-                localStorage.removeItem("currentUser");
-                location.href = "dashboard.html"; 
-            }
-        }
-
-        // Đóng menu khi bấm ra ngoài
-        window.onclick = function(event) {
-            if (!event.target.matches('.user-btn') && !event.target.closest('.user-btn')) {
-                document.getElementById("myDropdown").classList.remove("show");
-            }
-        }
-        
-        // Chạy hàm kiểm tra ngay khi load trang
-        checkStatus();
+        setInterval(checkDuyetThe, 15000); // 15 giây check 1 lần cho máu
+        checkDuyetThe();
     </script>
 </body>
 </html>
