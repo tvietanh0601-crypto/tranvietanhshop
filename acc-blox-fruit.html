@@ -2,88 +2,166 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Acc - TranvietanhShop</title>
+    <title>Cửa Hàng Acc - TranvietanhShop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
-        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
+        
+        /* SIDEBAR */
+        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; z-index: 100; }
+        .sidebar h2 { color: #007bff; text-align: center; cursor: pointer; }
         .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; }
+        .sidebar p:hover { background: #3d444b; color: #007bff; }
+        
         .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .acc-card { background: white; width: 400px; border-radius: 20px; overflow: hidden; margin: auto; text-align: center; padding-bottom: 30px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .price { color: #e74c3c; font-size: 2rem; font-weight: bold; margin: 15px 0; }
-        .btn-buy { background: #28a745; color: white; border: none; padding: 15px 50px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        .sold-out { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); align-items: center; justify-content: center; color: red; font-size: 2.5rem; font-weight: bold; z-index: 10; }
+
+        /* HEADER & DROPDOWN MENU (PHẦN CẬU CẦN) */
+        .user-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 30px; }
+        .user-dropdown { position: relative; display: inline-block; }
+        
+        /* Nút người dùng */
+        .user-btn { 
+            background: white; border: 1px solid #eee; padding: 8px 15px; border-radius: 50px; 
+            cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            transition: 0.3s;
+        }
+        .user-btn:hover { background: #f9f9f9; }
+        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; border: 2px solid #007bff; }
+        
+        /* Khung menu ẩn */
+        .dropdown-content { 
+            display: none; position: absolute; right: 0; top: 55px; 
+            background: white; min-width: 280px; border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 1000; padding: 20px; border: 1px solid #eee; 
+        }
+        /* Hiện menu khi có class 'show' */
+        .dropdown-content.show { display: block; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+
+        .dropdown-content h4 { margin: 0 0 15px; color: #333; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .menu-item { 
+            padding: 10px; border-radius: 8px; cursor: pointer; transition: 0.2s; 
+            display: flex; justify-content: space-between; align-items: center; color: #444;
+        }
+        .menu-item:hover { background: #f5f5f5; color: #007bff; }
+        
+        .history-box { 
+            max-height: 150px; overflow-y: auto; background: #fafafa; 
+            border-radius: 8px; padding: 10px; font-size: 0.85rem; margin-top: 10px; 
+        }
+
+        /* ACC CARD */
+        .acc-card { background: white; width: 350px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin: auto; text-align: center; }
+        .btn-buy { background: #28a745; color: white; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
         <p style="background: #007bff; color: white;">⚔️ Acc Blox Fruit</p>
+        <p onclick="location.href='robux.html'">💎 Nạp Robux</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
     </div>
 
     <div class="main">
         <div class="user-header">
-            <div class="user-btn">
-                <img src="https://i.imgur.com/v6SQUC9.png" width="35" style="border-radius:50%; margin-right:10px;">
-                <div>
-                    <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp VietAnh</span>
-                    <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span>
+            <div class="user-dropdown">
+                <div class="user-btn" onclick="toggleUserMenu()">
+                    <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
+                    <div style="text-align: left;">
+                        <span id="userNameHeader" style="font-weight:bold; display:block; font-size: 0.95rem;">DoraemonStudio01</span>
+                        <span id="userBalance" style="color:#e74c3c; font-size:0.85rem; font-weight: bold;">0 đ</span>
+                    </div>
+                    <span style="margin-left: 10px; font-size: 0.8rem; color: #999;">▼</span>
+                </div>
+
+                <div id="userMenu" class="dropdown-content">
+                    <h4>🆔 Thông tin cá nhân</h4>
+                    <div class="menu-item">ID: <b id="displayID">#ADMIN</b></div>
+                    <div class="menu-item">Số dư: <b style="color:red" id="menuBalance">0 đ</b></div>
+                    
+                    <hr style="border: 0.5px solid #eee; margin: 15px 0;">
+                    
+                    <h4>📜 Lịch sử giao dịch</h4>
+                    <div class="menu-item" onclick="alert('Tính năng đang đồng bộ từ Sheets...')">💳 Lịch sử nạp thẻ</div>
+                    <div class="history-box" id="buyHistory">
+                        Chưa có lịch sử mua acc.
+                    </div>
+                    
+                    <p style="color:red; cursor:pointer; font-weight:bold; margin-top:20px; text-align:center;" onclick="thoat()">↪ Thoát Shop</p>
                 </div>
             </div>
         </div>
 
+        <h2 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">DANH SÁCH ACC BLOX FRUIT</h2>
+        
         <div class="acc-card">
-            <div id="soldTag" class="sold-out">ĐÃ BÁN</div>
-            <img src="https://via.placeholder.com/400x230?text=Blox+Fruit+VIP+Max" width="100%">
+            <img src="https://via.placeholder.com/350x200?text=Acc+VIP+Max+Level" width="100%">
             <div style="padding: 20px;">
-                <h3>Siêu Phẩm: LV MAX + GODHUMAN + V4</h3>
-                <p>✅ CDK | ✅ Soul Guitar | ✅ Tộc V4 1 Gear</p>
-                <div class="price">150,000 đ</div>
-                <button class="btn-buy" id="buyBtn" onclick="buyAcc(150000)">MUA NGAY</button>
+                <h3>Acc Blox Fruit #01</h3>
+                <p>Max Level, Godhuman, Soul Guitar...</p>
+                <h2 style="color: #e74c3c;">100,000đ</h2>
+                <button class="btn-buy" onclick="muaAcc()">MUA NGAY</button>
             </div>
         </div>
     </div>
 
     <script>
-        // KIỂM TRA TIỀN & TRẠNG THÁI
-        async function checkData() {
-            const user = localStorage.getItem("currentUser");
-            document.getElementById("userNameHeader").innerText = user;
+        // HÀM HIỆN/ẨN MENU KHI BẤM VÀO NÚT
+        function toggleUserMenu() {
+            document.getElementById("userMenu").classList.toggle("show");
+        }
 
-            // 1. Check xem acc đã bán chưa
-            if(localStorage.getItem("acc_sold") === "true") {
-                document.getElementById("soldTag").style.display = "flex";
-                document.getElementById("buyBtn").style.display = "none";
+        // ĐÓNG MENU NẾU BẤM RA NGOÀI
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-btn') && !event.target.closest('.user-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
             }
+        }
 
-            // 2. Check tiền từ Sheets
+        // HÀM ĐỌC TIỀN TỪ SHEETS (CẬU THAY LINK CỦA CẬU VÀO)
+        async function loadData() {
+            const user = "DoraemonStudio01"; // Tên của cậu
             try {
-                const res = await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9");
-                const data = await res.json();
-                const danhSachDuyet = data.filter(item => item.username === user && item.status === "Đã duyệt");
-                let tongTien = 0;
-                danhSachDuyet.forEach(the => tongTien += parseInt(the.menhGia));
-                localStorage.setItem("userBalance", tongTien);
-                document.getElementById("userBalance").innerText = tongTien.toLocaleString() + " đ";
-            } catch (e) { }
+                const response = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu");
+                const data = await response.json();
+                
+                // Tính tổng tiền thẻ "Đã duyệt"
+                const listDuyet = data.filter(i => i.username === user && i.status === "Đã duyệt");
+                let tong = 0;
+                listDuyet.forEach(t => tong += parseInt(t.menhGia));
+                
+                // Hiện lên web
+                const moneyStr = tong.toLocaleString() + " đ";
+                document.getElementById("userBalance").innerText = moneyStr;
+                document.getElementById("menuBalance").innerText = moneyStr;
+                localStorage.setItem("userBalance", tong);
+            } catch (e) { console.log("Đang check thẻ..."); }
         }
 
-        async function buyAcc(gia) {
-            let balance = parseInt(localStorage.getItem("userBalance") || 0);
-            if(balance < gia) return alert("Sếp ơi thiếu tiền rồi! Nạp thêm thẻ đi sếp.");
-
-            if(confirm("Chốt đơn 150k nhé sếp?")) {
-                alert("MUA THÀNH CÔNG! Tài khoản: MaryCurtis932 / Mật khẩu: TVA627777227");
-                localStorage.setItem("acc_sold", "true");
-                location.reload();
+        function muaAcc() {
+            let bal = parseInt(localStorage.getItem("userBalance") || 0);
+            if(bal < 100000) return alert("Sếp thiếu tiền rồi! Nạp thêm thẻ đi.");
+            if(confirm("Xác nhận mua?")) {
+                alert("Mua thành công! Acc: MaryCurtis932 / MK: TVA627777227");
+                // Lưu vào lịch sử hiển thị
+                document.getElementById("buyHistory").innerHTML = "<b>Đã mua:</b> Acc #01 (100k)";
             }
         }
-        checkData();
+
+        function thoat() { 
+            if(confirm("Thoát thật à sếp?")) location.href="dashboard.html"; 
+        }
+
+        loadData();
+        setInterval(loadData, 20000); // Tự cập nhật tiền mỗi 20s
     </script>
 </body>
 </html>
