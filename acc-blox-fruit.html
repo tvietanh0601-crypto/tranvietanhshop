@@ -2,66 +2,119 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Acc - VietAnh Shop</title>
+    <title>Túi Mù Blox Fruit - VietAnh Shop</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
-        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
-        .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; }
-        .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .acc-card { background: white; width: 400px; border-radius: 20px; overflow: hidden; margin: auto; text-align: center; padding-bottom: 30px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .sold-out { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8); align-items:center; justify-content:center; color:red; font-size:2.5rem; font-weight:bold; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; }
+        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; }
+        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; }
+        .sidebar p:hover { background: #007bff; }
+        .main { margin-left: 310px; padding: 40px; width: 100%; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
+        .user-btn img { width: 40px; height: 40px; border-radius: 50%; }
+        
+        .box-container { display: flex; justify-content: center; margin-top: 40px; }
+        .blind-box { background: #222; width: 380px; border-radius: 24px; padding: 30px; text-align: center; border: 2px solid #ffb900; box-shadow: 0 0 20px rgba(255,185,0,0.2); transition: 0.3s; }
+        .blind-box:hover { transform: translateY(-5px); box-shadow: 0 0 30px rgba(255,185,0,0.4); }
+        .blind-box img { width: 80%; margin-bottom: 20px; border-radius: 15px; filter: drop-shadow(0 0 10px #ffb900); }
+        .price { font-size: 2.2rem; color: #ff4757; font-weight: bold; margin: 15px 0; }
+        .stock-info { display: flex; justify-content: space-around; margin: 20px 0; background: #111; padding: 12px; border-radius: 12px; font-size: 0.95rem; }
+        .btn-buy { width: 100%; padding: 16px; background: #ffb900; color: #000; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+        .btn-buy:hover { background: #ffe066; }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
+        <h2>VIETANH SHOP</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
-        <p style="background: #007bff; color: white;">⚔️ Acc Blox Fruit</p>
-        <p onclick="location.href='robux.html'">💎 Nạp Robux</p>
+        <p style="background: #007bff; color: white;">⚔️ Túi Mù Blox Fruit</p>
+        <p onclick="location.href='lichsumuaacc.html'">📜 Lịch Sử Mua Acc</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
+        <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
     </div>
     <div class="main">
         <div class="user-header">
             <div class="user-btn">
-                <img src="https://i.imgur.com/v6SQUC9.png" width="35" style="border-radius:50%; margin-right:10px;">
-                <div><span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span><span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">0 đ</span></div>
+                <img src="https://i.imgur.com/v6SQUC9.png">
+                <div><span id="userNameHeader">Sếp</span><span id="userBalance" style="color:#ff4757; font-weight: bold; display:block;">0 đ</span></div>
             </div>
         </div>
-        <div class="acc-card">
-            <div id="soldTag" class="sold-out">ĐÃ BÁN</div>
-            <img src="https://via.placeholder.com/400x230?text=Blox+Fruit+VIP" width="100%">
-            <div style="padding: 20px;">
-                <h3>LV MAX + GODHUMAN</h3>
-                <div style="color:red; font-size:2rem; font-weight:bold; margin:15px 0;">150,000 đ</div>
-                <button id="buyBtn" onclick="buyAcc(150000)" style="padding:15px 40px; background:#28a745; color:white; border:none; border-radius:10px; cursor:pointer;">MUA NGAY</button>
+        <div class="box-container">
+            <div class="blind-box">
+                <img src="https://i.imgur.com/w1N3bKq.png" alt="Túi Mù Blox Fruit VIP">
+                <h3>📦 TÚI MÙ SĂN ACC MAX LEVEL</h3>
+                <div class="price">50,000 đ</div>
+                <div class="stock-info">
+                    <div>🔴 Đã bán: <b id="soldCount" style="color:#ff4757">Đang tính...</b></div>
+                    <div>🟢 Còn lại: <b id="stockCount" style="color:#2ed573">Đang tính...</b></div>
+                </div>
+                <button class="btn-buy" onclick="buyBlindBox()">MỞ TÚI MÙ NGAY</button>
             </div>
         </div>
     </div>
     <script>
-        async function checkData() {
-            const user = localStorage.getItem("currentUser");
-            document.getElementById("userNameHeader").innerText = user;
-            if(localStorage.getItem("acc_sold") === "true") { document.getElementById("soldTag").style.display = "flex"; document.getElementById("buyBtn").style.display = "none"; }
+        const apiBase = "https://sheetdb.io/api/v1/ipb6o50vzg1xu"; // THAY LINK API CHUNG CỦA SẾP
+        const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
+
+        async function initPage() {
+            // 1. Tính ví
             try {
-                // THAY API CỦA SẾP TẠI ĐÂY
-                const res = await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9");
-                const data = await res.json();
-                const list = data.filter(i => i.username.trim() === user.trim() && i.status.trim().toLowerCase() === "đã duyệt");
-                let tong = 0; list.forEach(t => tong += parseInt(t.menhGia || 0));
-                document.getElementById("userBalance").innerText = tong.toLocaleString() + " đ";
-                localStorage.setItem("userBalance", tong);
-            } catch (e) { }
+                const resNap = await fetch(`${apiBase}?sheet=LichSuNap`);
+                const dataNap = await resNap.json();
+                let balance = 0;
+                dataNap.filter(i => i.username === user && i.status === "Đã duyệt").forEach(t => balance += parseInt(t.menhGia || 0));
+                document.getElementById("userBalance").innerText = balance.toLocaleString() + " đ";
+                localStorage.setItem("userBalance", balance);
+            } catch(e){}
+
+            // 2. Tính số lượng Acc Realtime từ tab KhoTuiMu
+            try {
+                const resKho = await fetch(`${apiBase}?sheet=KhoTuiMu`);
+                const dataKho = await resKho.json();
+                const unsold = dataKho.filter(i => i.status.trim() === "Chưa bán");
+                const sold = dataKho.filter(i => i.status.trim() === "Đã bán");
+                document.getElementById("stockCount").innerText = unsold.length;
+                document.getElementById("soldCount").innerText = sold.length;
+            } catch(e){}
         }
-        function buyAcc(gia) {
-            let bal = parseInt(localStorage.getItem("userBalance") || 0);
-            if(bal < gia) return alert("Thiếu tiền sếp ơi!");
-            if(confirm("Xác nhận mua?")) { alert("Thành công! Acc: MaryCurtis932 / MK: TVA627777227"); localStorage.setItem("acc_sold", "true"); location.reload(); }
+
+        async function buyBlindBox() {
+            let balance = parseInt(localStorage.getItem("userBalance") || 0);
+            if (balance < 50000) return alert("Sếp không đủ 50.000đ rồi, nạp thêm thẻ đi sếp!");
+
+            if (!confirm("Sếp chắc chắn muốn mở Túi Mù với giá 50.000đ chứ?")) return;
+
+            try {
+                // Lấy 1 acc Chưa bán từ kho
+                const resKho = await fetch(`${apiBase}?sheet=KhoTuiMu`);
+                const dataKho = await resKho.json();
+                const targetAcc = dataKho.find(i => i.status.trim() === "Chưa bán");
+
+                if (!targetAcc) return alert("Hết acc trong Túi Mù rồi sếp ơi, đợi Admin thêm hàng nhé!");
+
+                // Đổi trạng thái acc thành Đã bán trên Sheets
+                await fetch(`${apiBase}/id/${targetAcc.id}?sheet=KhoTuiMu`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ data: { status: "Đã bán" } })
+                });
+
+                // Ghi vào lịch sử mua acc
+                const buyRecord = { data: [{ username: user, ngayMua: new Date().toLocaleString(), accMua: targetAcc.username_acc, matKhau: targetAcc.password_acc }] };
+                await fetch(`${apiBase}?sheet=LichSuMua`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(buyRecord) });
+
+                // Tạo dòng trừ tiền trong LichSuNap để đồng bộ ví
+                const chargeRecord = { data: [{ username: user, nhaMang: "MUA_TUIMU", menhGia: "-50000", seri: "Túi Mù ID: " + targetAcc.id, maNap: "Mở Túi Mù", status: "Đã duyệt", ngayNap: new Date().toLocaleString() }] };
+                await fetch(`${apiBase}?sheet=LichSuNap`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(chargeRecord) });
+
+                alert(`🎉 MỞ THÀNH CÔNG!\nTài khoản: ${targetAcc.username_acc}\nMật khẩu: ${targetAcc.password_acc}\nThông tin đã được lưu vào Lịch Sử Mua Acc!`);
+                location.href = "lichsumuaacc.html";
+
+            } catch(e) { alert("Hệ thống bận sếp ơi!"); }
         }
-        checkData();
+
+        initPage();
     </script>
 </body>
 </html>
