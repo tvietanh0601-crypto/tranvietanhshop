@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Sử Mua Acc - VietAnh Shop</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; }
+        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; }
+        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; }
+        .sidebar p:hover { background: #007bff; }
+        .main { margin-left: 310px; padding: 40px; width: 100%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #222; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #333; }
+        th { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>VIETANH SHOP</h2>
+        <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
+        <p onclick="location.href='acc-blox-fruit.html'">⚔️ Túi Mù Blox Fruit</p>
+        <p style="background: #007bff; color: white;">📜 Lịch Sử Mua Acc</p>
+        <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
+        <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
+    </div>
+    <div class="main">
+        <h2>📜 LỊCH SỬ SĂN TÚI MÙ CỦA SẾP</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Thời Gian</th>
+                    <th>Tài Khoản Acc</th>
+                    <th>Mật Khẩu Acc</th>
+                </tr>
+            </thead>
+            <tbody id="historyTable">
+                <tr><td colspan="3" style="text-align:center;">Đang lục tìm lịch sử...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        async function loadHistory() {
+            const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
+            try {
+                const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu?sheet=LichSuMua");
+                const data = await res.json();
+                const myAccs = data.filter(i => i.username.trim() === user.trim());
+                
+                let html = "";
+                if(myAccs.length === 0) {
+                    html = "<tr><td colspan='3' style='text-align:center;'>Sếp chưa mở cái túi mù nào hết trơn!</td></tr>";
+                } else {
+                    myAccs.forEach(item => {
+                        html += `<tr><td>${item.ngayMua}</td><td style="color:#007bff; font-weight:bold;">${item.accMua}</td><td style="color:#2ed573; font-weight:bold;">${item.matKhau}</td></tr>`;
+                    });
+                }
+                document.getElementById("historyTable").innerHTML = html;
+            } catch(e){}
+        }
+        loadHistory();
+    </script>
+</body>
+</html>
