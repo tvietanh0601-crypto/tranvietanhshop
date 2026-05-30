@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <title>Trang Chủ - VietAnh Shop</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #f4f7f6; }
-        .sidebar { width: 250px; height: 100vh; background: #212529; color: white; padding: 20px; position: fixed; }
-        .sidebar h2 { cursor: pointer; text-align: center; color: #007bff; }
-        .sidebar p { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin: 8px 0; }
-        .sidebar p:hover { background: #3d444b; }
-        .main { margin-left: 250px; padding: 20px; width: calc(100% - 250px); box-sizing: border-box; }
-        .user-header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
-        .user-btn { background: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .user-btn img { width: 35px; height: 35px; border-radius: 50%; margin-right: 12px; }
-        .welcome-box { background: white; padding: 50px; border-radius: 20px; text-align: center; margin-top: 50px; }
-        .btn-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        .btn { padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); }
+        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; font-size: 1.8rem; text-shadow: 0 0 10px rgba(0,123,255,0.5); }
+        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .sidebar p:hover { background: #007bff; color: white; box-shadow: 0 0 10px rgba(0,123,255,0.4); }
+        .main { margin-left: 310px; padding: 40px; width: 100%; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .user-btn img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #007bff; }
+        .welcome-box { background: #222; padding: 60px; border-radius: 24px; text-align: center; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .welcome-box h1 { font-size: 2.5rem; color: #007bff; margin-bottom: 20px; }
+        .btn-panel { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .btn-go { padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; color: white; background: #007bff; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
+        .btn-go:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,123,255,0.5); }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2 onclick="location.href='trangchu.html'">VietAnh Shop</h2>
+        <h2>VIETANH SHOP</h2>
         <p style="background: #007bff; color: white;">🏠 Trang Chủ</p>
-        <p onclick="location.href='acc-blox-fruit.html'">⚔️ Acc Blox Fruit</p>
-        <p onclick="location.href='robux.html'">💎 Nạp Robux</p>
+        <p onclick="location.href='acc-blox-fruit.html'">⚔️ Túi Mù Blox Fruit</p>
+        <p onclick="location.href='lichsumuaacc.html'">📜 Lịch Sử Mua Acc</p>
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
+        <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
     </div>
     <div class="main">
         <div class="user-header">
@@ -32,42 +35,36 @@
                 <img src="https://i.imgur.com/v6SQUC9.png">
                 <div>
                     <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
-                    <span id="userBalance" style="color:#e74c3c; font-size:0.8rem; font-weight: bold;">Đang check ví...</span>
+                    <span id="userBalance" style="color:#ff4757; font-weight: bold;">Đang tính ví...</span>
                 </div>
             </div>
         </div>
         <div class="welcome-box">
-            <h1>Chào mừng Sếp đến với Shop!</h1>
-            <div class="btn-container">
-                <a href="acc-blox-fruit.html" class="btn" style="background:#007bff">Mua Acc</a>
-                <a href="robux.html" class="btn" style="background:#ffc107; color:black">Mua Robux</a>
+            <h1>Chào mừng Sếp quay trở lại!</h1>
+            <p style="color: #aaa; font-size: 1.1rem;">Hệ thống Túi Mù Blox Fruit tự động siêu cấp an toàn.</p>
+            <div class="btn-panel">
+                <a href="acc-blox-fruit.html" class="btn-go">Mua Túi Mù Ngay</a>
             </div>
         </div>
     </div>
     <script>
-        async function checkStatus() {
-            const user = localStorage.getItem("currentUser");
-            if (!user) return;
+        async function getWallet() {
+            const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
+            localStorage.setItem("currentUser", user);
             document.getElementById("userNameHeader").innerText = user;
             try {
-                // THAY API CỦA SẾP TẠI ĐÂY
-                const response = await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9");
-                const data = await response.json();
-                
-                // Lọc bỏ dấu cách thừa ở status và username
-                const listDuyet = data.filter(item => 
-                    item.username.trim() === user.trim() && 
-                    item.status.trim().toLowerCase() === "đã duyệt"
-                );
-
-                let tong = 0;
-                listDuyet.forEach(t => tong += parseInt(t.menhGia || 0));
-                document.getElementById("userBalance").innerText = tong.toLocaleString() + " đ";
-                localStorage.setItem("userBalance", tong);
-            } catch (e) { document.getElementById("userBalance").innerText = "Lỗi kết nối"; }
+                // SẾP THAY LINK API SHEETDB (TAB LichSuNap) VÀO ĐÂY
+                const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu?sheet=LichSuNap");
+                const data = await res.json();
+                const cleanData = data.filter(i => i.username.trim() === user.trim() && i.status.trim() === "Đã duyệt");
+                let total = 0;
+                cleanData.forEach(t => total += parseInt(t.menhGia || 0));
+                document.getElementById("userBalance").innerText = total.toLocaleString() + " đ";
+                localStorage.setItem("userBalance", total);
+            } catch(e) { document.getElementById("userBalance").innerText = "0 đ"; }
         }
-        checkStatus();
-        setInterval(checkStatus, 30000);
+        getWallet();
+        setInterval(getWallet, 15000);
     </script>
 </body>
 </html>
