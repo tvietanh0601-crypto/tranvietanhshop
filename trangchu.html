@@ -54,7 +54,7 @@
             document.getElementById("userNameHeader").innerText = user;
             try {
                 // SẾP THAY LINK API SHEETDB (TAB LichSuNap) VÀO ĐÂY
-                const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu?sheet=LichSuNap");
+                const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu");
                 const data = await res.json();
                 const cleanData = data.filter(i => i.username.trim() === user.trim() && i.status.trim() === "Đã duyệt");
                 let total = 0;
