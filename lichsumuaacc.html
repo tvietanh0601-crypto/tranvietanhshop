@@ -5,17 +5,24 @@
     <title>Lịch Sử Mua Acc - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
-        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; }
-        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; }
-        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; }
-        .sidebar p:hover { background: #007bff; }
-        .main { margin-left: 310px; padding: 40px; width: 100%; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #222; border-radius: 12px; overflow: hidden; }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); z-index: 99; }
+        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; font-size: 1.8rem; }
+        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; font-weight: 500; }
+        .sidebar p:hover { background: #007bff; color: white; }
+        
+        .main { margin-left: 310px; padding: 40px; width: 100%; box-sizing: border-box; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
+        .user-btn img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #007bff; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #222; border-radius: 12px; overflow: hidden; border: 1px solid #333; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid #333; }
-        th { background: #007bff; color: white; }
+        th { background: #007bff; color: white; font-weight: bold; }
+        tr:hover { background: #2a2a2a; }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <h2>VIETANH SHOP</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
@@ -24,40 +31,71 @@
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
         <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
     </div>
+
     <div class="main">
-        <h2>📜 LỊCH SỬ SĂN TÚI MÙ CỦA SẾP</h2>
+        <div class="user-header">
+            <div class="user-btn">
+                <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
+                <div>
+                    <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
+                    <span id="userBalance" style="color:#ff4757; font-weight: bold;">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>📜 LỊCH SỬ TÚI MÙ ĐÃ MỞ</h2>
         <table>
             <thead>
                 <tr>
                     <th>Thời Gian</th>
-                    <th>Tài Khoản Acc</th>
-                    <th>Mật Khẩu Acc</th>
+                    <th>Tài Khoản Nick</th>
+                    <th>Mật Khẩu Nick</th>
                 </tr>
             </thead>
-            <tbody id="historyTable">
-                <tr><td colspan="3" style="text-align:center;">Đang lục tìm lịch sử...</td></tr>
+            <tbody id="historyTableBody">
+                <tr><td colspan="3" style="text-align:center; color:#aaa;">Đang quét lịch sử từ hệ thống...</td></tr>
             </tbody>
         </table>
     </div>
+
     <script>
+        // SẾP HÃY THAY LINK API SHEETDB THẬT CỦA CẬU VÀO ĐÂY NHÉ!
+        const apiBase = "https://sheetdb.io/api/v1/ipb6o50vzg1xu";
+
         async function loadHistory() {
-            const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
+            const user = localStorage.getItem("currentUser");
+            if(!user) { location.href='trangchu.html'; return; }
+            
+            document.getElementById("userNameHeader").innerText = user;
+            const bal = localStorage.getItem("userBalance") || 0;
+            document.getElementById("userBalance").innerText = parseInt(bal).toLocaleString() + " đ";
+
             try {
-                const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu?sheet=LichSuMua");
+                const res = await fetch(`${apiBase}?sheet=LichSuMua`);
                 const data = await res.json();
-                const myAccs = data.filter(i => i.username.trim() === user.trim());
                 
-                let html = "";
-                if(myAccs.length === 0) {
-                    html = "<tr><td colspan='3' style='text-align:center;'>Sếp chưa mở cái túi mù nào hết trơn!</td></tr>";
-                } else {
-                    myAccs.forEach(item => {
-                        html += `<tr><td>${item.ngayMua}</td><td style="color:#007bff; font-weight:bold;">${item.accMua}</td><td style="color:#2ed573; font-weight:bold;">${item.matKhau}</td></tr>`;
-                    });
+                // Bộ lọc thông minh: Chỉ lấy lịch sử trùng khớp với tài khoản đang đăng nhập
+                const myData = data.filter(i => i.username.trim() === user.trim());
+                const tbody = document.getElementById("historyTableBody");
+                tbody.innerHTML = "";
+
+                if(myData.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#ff4757; font-weight:bold;">Sếp chưa mua chiếc túi mù nào hết trơn!</td></tr>`;
+                    return;
                 }
-                document.getElementById("historyTable").innerHTML = html;
-            } catch(e){}
+
+                myData.reverse().forEach(item => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.ngayMua}</td>
+                            <td style="color: #ffb900; font-weight: bold;">${item.accMua}</td>
+                            <td style="color: #28a745; font-weight: bold;">${item.matKhau}</td>
+                        </tr>
+                    `;
+                });
+            } catch(e) { document.getElementById("historyTableBody").innerHTML = `<tr><td colspan="3" style="text-align:center; color:red;">Lỗi kết nối tải dữ liệu!</td></tr>`; }
         }
+
         loadHistory();
     </script>
 </body>
