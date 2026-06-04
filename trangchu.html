@@ -5,22 +5,57 @@
     <title>Trang Chủ - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
-        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); z-index: 99; }
         .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; font-size: 1.8rem; text-shadow: 0 0 10px rgba(0,123,255,0.5); }
         .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .sidebar p:hover { background: #007bff; color: white; box-shadow: 0 0 10px rgba(0,123,255,0.4); }
-        .main { margin-left: 310px; padding: 40px; width: 100%; }
+        
+        .main { margin-left: 310px; padding: 40px; width: 100%; box-sizing: border-box; }
         .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; }
         .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .user-btn img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #007bff; }
+        
+        /* Nút đăng xuất nhỏ gọn màu đỏ */
+        .logout-btn { background: #ff4757; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: bold; margin-top: 3px; display: block; transition: 0.2s; text-align: center;}
+        .logout-btn:hover { background: #ff6b81; transform: scale(1.05); }
+
         .welcome-box { background: #222; padding: 60px; border-radius: 24px; text-align: center; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .welcome-box h1 { font-size: 2.5rem; color: #007bff; margin-bottom: 20px; }
         .btn-panel { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
         .btn-go { padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; color: white; background: #007bff; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
         .btn-go:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,123,255,0.5); }
+
+        /* ================= POPUP THÔNG BÁO QUẢNG CÁO ================= */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 1; transition: 0.3s ease;
+        }
+        .popup-box {
+            background: #222; width: 450px; padding: 35px; border-radius: 20px;
+            text-align: center; border: 2px solid #007bff; box-shadow: 0 0 25px rgba(0, 123, 255, 0.6);
+        }
+        .popup-box h2 { color: #ffb900; margin-top: 0; font-size: 1.6rem; }
+        .popup-box p { color: #eee; font-size: 1.15rem; line-height: 1.6; margin: 20px 0; font-weight: bold; }
+        .popup-btn {
+            background: #007bff; color: white; border: none; padding: 12px 45px;
+            font-size: 1.1rem; font-weight: bold; border-radius: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .popup-btn:hover { background: #0056b3; transform: scale(1.05); }
     </style>
 </head>
 <body>
+
+    <!-- THÔNG BÁO NỔI LÊN KHI VỪA VÀO WEB -->
+    <div id="welcomePopup" class="popup-overlay">
+        <div class="popup-box">
+            <h2>📢 THÔNG BÁO TỪ ADMIN</h2>
+            <p>Mua acc blox fruits ở đâu rẻ?<br><span style="color: #ff4757; font-size: 1.3rem;">Ở ĐÂY TÔI BÁN RẺ HƠN!</span></p>
+            <button class="popup-btn" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <!-- SIDEBAR NAVIGATION -->
     <div class="sidebar">
         <h2>VIETANH SHOP</h2>
         <p style="background: #007bff; color: white;">🏠 Trang Chủ</p>
@@ -29,16 +64,21 @@
         <p onclick="location.href='naptien.html'">💳 Nạp Thẻ Cào</p>
         <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
     </div>
+
+    <!-- MAIN CONTENT -->
     <div class="main">
         <div class="user-header">
             <div class="user-btn">
-                <img src="https://i.imgur.com/v6SQUC9.png">
+                <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
                 <div>
                     <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
                     <span id="userBalance" style="color:#ff4757; font-weight: bold;">Đang tính ví...</span>
+                    <!-- NÚT ĐĂNG XUẤT ĐÃ ĐƯỢC THÊM VÀO ĐÂY -->
+                    <button class="logout-btn" onclick="logout()">Đăng xuất</button>
                 </div>
             </div>
         </div>
+
         <div class="welcome-box">
             <h1>Chào mừng Sếp quay trở lại!</h1>
             <p style="color: #aaa; font-size: 1.1rem;">Hệ thống Túi Mù Blox Fruit tự động siêu cấp an toàn.</p>
@@ -47,24 +87,48 @@
             </div>
         </div>
     </div>
+
     <script>
+        function closePopup() {
+            const popup = document.getElementById("welcomePopup");
+            popup.style.opacity = "0";
+            setTimeout(() => { popup.style.display = "none"; }, 300);
+        }
+
+        // Hàm xử lý khi bấm đăng xuất
+        function logout() {
+            if(confirm("Sếp muốn đăng xuất tài khoản này à?")) {
+                localStorage.removeItem("currentUser");
+                localStorage.removeItem("userBalance");
+                // Chuyển hướng về trang đăng nhập của sếp (sếp thay tên file đăng nhập vào đây nếu cần nhé)
+                location.href = "dangnhap.html"; 
+            }
+        }
+
         async function getWallet() {
+            // Đảm bảo lấy đúng nick đang test
             const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
             localStorage.setItem("currentUser", user);
             document.getElementById("userNameHeader").innerText = user;
+            
             try {
-                // SẾP THAY LINK API SHEETDB (TAB LichSuNap) VÀO ĐÂY
+                // SẾP THAY LINK API MỚI TỪ FILE TRANVIETANHSHOP_DB VÀO ĐÂY NHÉ
                 const res = await fetch("https://sheetdb.io/api/v1/ipb6o50vzg1xu");
                 const data = await res.json();
+                
                 const cleanData = data.filter(i => i.username.trim() === user.trim() && i.status.trim() === "Đã duyệt");
                 let total = 0;
                 cleanData.forEach(t => total += parseInt(t.menhGia || 0));
+                
                 document.getElementById("userBalance").innerText = total.toLocaleString() + " đ";
                 localStorage.setItem("userBalance", total);
-            } catch(e) { document.getElementById("userBalance").innerText = "0 đ"; }
+            } catch(e) { 
+                document.getElementById("userBalance").innerText = "0 đ"; 
+            }
         }
+
         getWallet();
-        setInterval(getWallet, 15000);
+        setInterval(getWallet, 15000); // Tự động làm mới ví sau mỗi 15 giây
     </script>
 </body>
 </html>
