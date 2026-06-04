@@ -5,18 +5,26 @@
     <title>Nạp Thẻ Cào - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; }
-        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; }
-        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; }
-        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; }
-        .sidebar p:hover { background: #007bff; }
-        .main { margin-left: 310px; padding: 40px; width: 100%; }
-        .form-box { background: #222; padding: 40px; border-radius: 20px; max-width: 500px; margin: auto; border: 1px solid #333; }
-        input, select { width: 100%; padding: 14px; margin: 12px 0; background: #111; border: 1px solid #444; border-radius: 10px; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 16px; background: #28a745; border: none; color: white; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 15px; }
-        button:hover { background: #218838; }
+        .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); z-index: 99; }
+        .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; font-size: 1.8rem; }
+        .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; font-weight: 500; }
+        .sidebar p:hover { background: #007bff; color: white; }
+        
+        .main { margin-left: 310px; padding: 40px; width: 100%; box-sizing: border-box; }
+        .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; }
+        .user-btn img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #007bff; }
+        
+        .form-box { background: #222; padding: 40px; border-radius: 24px; border: 1px solid #333; max-width: 500px; margin: 0 auto; }
+        .form-box h2 { text-align: center; color: #007bff; margin-top: 0; margin-bottom: 30px; }
+        select, input { width: 100%; padding: 14px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid #444; border-radius: 12px; color: white; box-sizing: border-box; font-size: 1rem; }
+        select:focus, input:focus { border-color: #007bff; outline: none; }
+        .submit-btn { background: #007bff; color: white; border: none; padding: 15px; font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; transition: 0.3s; }
+        .submit-btn:hover { background: #0056b3; transform: translateY(-2px); }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <h2>VIETANH SHOP</h2>
         <p onclick="location.href='trangchu.html'">🏠 Trang Chủ</p>
@@ -25,41 +33,94 @@
         <p style="background: #007bff; color: white;">💳 Nạp Thẻ Cào</p>
         <p onclick="location.href='lichsunaptien.html'">📝 Lịch Sử Nạp</p>
     </div>
+
     <div class="main">
+        <div class="user-header">
+            <div class="user-btn">
+                <img src="https://i.imgur.com/v6SQUC9.png" alt="Avatar">
+                <div>
+                    <span id="userNameHeader" style="font-weight:bold; display:block;">Sếp</span>
+                    <span id="userBalance" style="color:#ff4757; font-weight: bold;">Loading...</span>
+                </div>
+            </div>
+        </div>
+
         <div class="form-box">
-            <h2 style="text-align:center; color:#28a745;">💳 HỆ THỐNG NẠP THẺ TỰ ĐỘNG</h2>
-            <select id="nhaMang"><option>Viettel</option><option>Mobifone</option><option>VinaPhone</option></select>
-            <select id="menhGia"><option value="10000">10,000 đ</option><option value="50000">50,000 đ</option><option value="100000">100,000 đ</option></select>
-            <input type="text" id="seri" placeholder="Nhập Số Seri Thẻ">
-            <input type="text" id="maNap" placeholder="Nhập Mã Nạp Dưới Lớp Bạc">
-            <button onclick="sendCard()">GỬI THẺ LÊN HỆ THỐNG</button>
+            <h2>💳 HỆ THỐNG NẠP THẺ CÀO</h2>
+            <select id="cardType">
+                <option value="Viettel">Viettel</option>
+                <option value="Vinaphone">Vinaphone</option>
+                <option value="Mobifone">Mobifone</option>
+                <option value="Zing">Thẻ Zing</option>
+            </select>
+            
+            <select id="cardValue">
+                <option value="10000">10,000 đ</option>
+                <option value="20000">20,000 đ</option>
+                <option value="50000">50,000 đ</option>
+                <option value="100000">100,000 đ</option>
+                <option value="200000">200,000 đ</option>
+                <option value="500000">500,000 đ</option>
+            </select>
+            
+            <input type="text" id="cardSeri" placeholder="Nhập Số Seri thẻ">
+            <input type="text" id="cardCode" placeholder="Nhập Mã Số nạp dưới lớp bạc">
+            
+            <button class="submit-btn" id="btnSubmit" onclick="sendCard()">GỬI THẺ LÊN HỆ THỐNG</button>
         </div>
     </div>
-    <script>
-        async function sendCard() {
-            const user = localStorage.getItem("currentUser") || "DoraemonStudio01";
-            const card = { data: [{
-                username: user,
-                nhaMang: document.getElementById("nhaMang").value,
-                menhGia: document.getElementById("menhGia").value,
-                seri: document.getElementById("seri").value,
-                maNap: document.getElementById("maNap").value,
-                status: "Chờ duyệt",
-                ngayNap: new Date().toLocaleString()
-            }]};
 
-            if(!document.getElementById("seri").value || !document.getElementById("maNap").value) return alert("Sếp điền đủ thông tin thẻ hộ tớ nhé!");
+    <script>
+        // SẾP HÃY THAY LINK API SHEETDB THẬT CỦA CẬU VÀO ĐÂY NHÉ!
+        const apiBase = "https://sheetdb.io/api/v1/ipb6o50vzg1xu";
+
+        function setupPage() {
+            const user = localStorage.getItem("currentUser");
+            if(!user) { location.href='trangchu.html'; return; }
+            document.getElementById("userNameHeader").innerText = user;
+            const bal = localStorage.getItem("userBalance") || 0;
+            document.getElementById("userBalance").innerText = parseInt(bal).toLocaleString() + " đ";
+        }
+
+        async function sendCard() {
+            const user = localStorage.getItem("currentUser");
+            const type = document.getElementById("cardType").value;
+            const value = document.getElementById("cardValue").value;
+            const seri = document.getElementById("cardSeri").value.trim();
+            const code = document.getElementById("cardCode").value.trim();
+
+            if(!seri || !code) { return alert("Vui lòng điền đầy đủ số Seri và mã thẻ cào sếp ơi!"); }
+
+            const btn = document.getElementById("btnSubmit");
+            btn.innerText = "ĐANG GỬI THẺ..."; btn.disabled = true;
 
             try {
-                await fetch("https://sheetdb.io/api/v1/5z2eiykkd64i9", {
+                const timeStr = new Date().toLocaleString("vi-VN");
+                
+                await fetch(`${apiBase}?sheet=LichSuNap`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(card)
+                    body: JSON.stringify({
+                        data: [{
+                            username: user,
+                            nhaMang: type,
+                            menhGia: value,
+                            seri: seri,
+                            maNap: code,
+                            status: "Chờ duyệt", // Sếp vào Sheet sửa thành "Đã duyệt" để cộng tiền cho khách nhé!
+                            ngayNap: timeStr
+                        }]
+                    })
                 });
-                alert("Gửi thẻ thành công! Vui lòng đợi sếp lớn duyệt nhé!");
-                location.href = "lichsunaptien.html";
-            } catch(e){ alert("Lỗi gửi thẻ cào!"); }
+
+                alert("Gửi thẻ thành công! Hệ thống đang xử lý, sếp vui lòng đợi từ 1 - 3 phút để admin duyệt thẻ nhé.");
+                document.getElementById("cardSeri").value = "";
+                document.getElementById("cardCode").value = "";
+            } catch(e) { alert("Lỗi hệ thống không gửi được thẻ!"); }
+            btn.innerText = "GỬI THẺ LÊN HỆ THỐNG"; btn.disabled = false;
         }
+
+        setupPage();
     </script>
 </body>
 </html>
