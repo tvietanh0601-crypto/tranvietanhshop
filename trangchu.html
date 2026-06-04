@@ -5,19 +5,15 @@
     <title>Trang Chủ - VietAnh Shop</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; background: #1a1a1a; color: #fff; overflow-x: hidden; }
-        
-        /* SIDEBAR NAVIGATION */
         .sidebar { width: 260px; height: 100vh; background: #111; padding: 25px; position: fixed; box-shadow: 4px 0 15px rgba(0,0,0,0.5); z-index: 99; }
         .sidebar h2 { color: #007bff; text-align: center; margin-bottom: 40px; font-size: 1.8rem; text-shadow: 0 0 10px rgba(0,123,255,0.5); }
         .sidebar p { padding: 14px; border-radius: 10px; cursor: pointer; transition: 0.3s; margin: 10px 0; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .sidebar p:hover { background: #007bff; color: white; box-shadow: 0 0 10px rgba(0,123,255,0.4); }
         
-        /* MAIN CONTENT */
         .main { margin-left: 310px; padding: 40px; width: 100%; box-sizing: border-box; }
         .user-header { display: flex; justify-content: flex-end; margin-bottom: 40px; min-height: 60px; }
         .user-btn { background: #222; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .user-btn img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #007bff; }
-        
         .logout-btn { background: #ff4757; color: white; border: none; padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: bold; margin-top: 3px; display: block; transition: 0.2s; text-align: center;}
         .logout-btn:hover { background: #ff6b81; transform: scale(1.05); }
 
@@ -27,7 +23,6 @@
         .btn-go { padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: bold; color: white; background: #007bff; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
         .btn-go:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,123,255,0.5); }
 
-        /* ================= KHUNG ĐĂNG NHẬP / ĐĂNG KÝ GỘP CHUNG ================= */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; display: flex; justify-content: center; align-items: center; z-index: 99999; }
         .auth-box { background: #222; width: 400px; padding: 40px; border-radius: 24px; border: 2px solid #007bff; box-shadow: 0 0 30px rgba(0,123,255,0.3); text-align: center; }
         .auth-box h2 { color: #007bff; margin-bottom: 25px; font-size: 1.8rem; }
@@ -38,7 +33,6 @@
         .switch-auth { color: #aaa; margin-top: 20px; font-size: 0.9rem; cursor: pointer; display: inline-block; }
         .switch-auth span { color: #007bff; font-weight: bold; }
 
-        /* ================= POPUP THÔNG BÁO QUẢNG CÁO ================= */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 1; transition: 0.3s ease; }
         .popup-box { background: #222; width: 450px; padding: 35px; border-radius: 20px; text-align: center; border: 2px solid #007bff; box-shadow: 0 0 25px rgba(0, 123, 255, 0.6); }
         .popup-box h2 { color: #ffb900; margin-top: 0; font-size: 1.6rem; }
@@ -57,7 +51,6 @@
             <button class="auth-btn" onclick="handleLogin()">ĐĂNG NHẬP</button>
             <p class="switch-auth" onclick="toggleAuth(false)">Chưa có tài khoản? <span>Đăng ký ngay</span></p>
         </div>
-        
         <div class="auth-box" id="registerForm" style="display: none;">
             <h2>📝 ĐĂNG KÝ TÀI KHOẢN</h2>
             <input type="text" id="regUser" placeholder="Tạo tên tài khoản">
@@ -106,125 +99,92 @@
     </div>
 
     <script>
-        // THAY LINK API SHEETDB CỦA FILE TRANVIETANHSHOP_DB VÀO ĐÂY NHÉ SẾP
+        // SẾP HÃY THAY LINK API SHEETDB THẬT CỦA CẬU VÀO ĐÂY NHÉ!
         const apiBase = "https://sheetdb.io/api/v1/ipb6o50vzg1xu";
 
-        // Chuyển đổi giữa giao diện Đăng Nhập và Đăng Ký
         function toggleAuth(isLogin) {
             document.getElementById("loginForm").style.display = isLogin ? "block" : "none";
             document.getElementById("registerForm").style.display = isLogin ? "none" : "block";
         }
 
-        // Đóng Popup quảng cáo
         function closePopup() {
             const popup = document.getElementById("welcomePopup");
             popup.style.opacity = "0";
             setTimeout(() => { popup.style.display = "none"; }, 300);
         }
 
-        // Kiểm tra điều hướng nếu chưa đăng nhập không cho đi tiếp
         function checkNav(page) {
             if(!localStorage.getItem("currentUser")) {
                 alert("Sếp vui lòng đăng nhập trước đã nhé!");
-            } else {
-                location.href = page;
-            }
+            } else { location.href = page; }
         }
 
-        // XỬ LÝ ĐĂNG NHẬP (Liên kết với tab QuanLiAcc)
         async function handleLogin() {
             const u = document.getElementById("loginUser").value.trim();
             const p = document.getElementById("loginPass").value.trim();
             if(!u || !p) return alert("Sếp điền đủ tài khoản và mật khẩu giùm tớ!");
-
             try {
                 const res = await fetch(`${apiBase}?sheet=QuanLiAcc`);
                 const accounts = await res.json();
-                
-                // Tìm tài khoản trùng khớp
                 const userMatch = accounts.find(acc => acc.username === u && acc.password === p);
-
                 if(userMatch) {
                     localStorage.setItem("currentUser", u);
-                    alert(`Chào mừng sếp ${u} đã quay trở lại shop!`);
+                    alert(`Chào mừng sếp ${u} đã đến với shop!`);
                     initSystem();
-                } else {
-                    alert("Sai tài khoản hoặc mật khẩu rồi sếp ơi, kiểm tra lại nhé!");
-                }
+                } else { alert("Sai tài khoản hoặc mật khẩu rồi sếp ơi!"); }
             } catch(e) { alert("Lỗi kết nối kiểm tra tài khoản!"); }
         }
 
-        // XỬ LÝ ĐĂNG KÝ (Gửi nick mới lên tab QuanLiAcc)
         async function handleRegister() {
             const u = document.getElementById("regUser").value.trim();
             const p = document.getElementById("regPass").value.trim();
-            if(!u || !p) return alert("Không được để trống thông tin đăng ký sếp ơi!");
-
+            if(!u || !p) return alert("Không được để trống thông tin sếp ơi!");
             try {
                 const res = await fetch(`${apiBase}?sheet=QuanLiAcc`);
                 const accounts = await res.json();
-                
-                // Kiểm tra xem tên tài khoản đã tồn tại chưa
-                if(accounts.some(acc => acc.username === u)) {
-                    return alert("Tên tài khoản này có người dùng rồi sếp ơi!");
-                }
-
-                // Gửi dữ liệu đăng ký mới lên Sheets
+                if(accounts.some(acc => acc.username === u)) { return alert("Tên tài khoản này đã có người dùng rồi!"); }
                 await fetch(`${apiBase}?sheet=QuanLiAcc`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ data: [{ username: u, password: p }] })
                 });
-
-                alert("Đăng ký tài khoản thành công! Tiến hành đăng nhập nào sếp.");
+                alert("Đăng ký thành công! Đăng nhập thôi sếp.");
                 toggleAuth(true);
             } catch(e) { alert("Lỗi đăng ký tài khoản!"); }
         }
 
-        // ĐĂNG XUẤT THOÁT TÀI KHOẢN
         function logout() {
-            if(confirm("Sếp muốn đăng xuất thật à?")) {
-                localStorage.clear();
-                location.reload();
-            }
+            if(confirm("Sếp muốn đăng xuất thật à?")) { localStorage.clear(); location.reload(); }
         }
 
-        // HÀM TÍNH VÍ TIỀN TỪ TAB LichSuNap
         async function getWallet() {
             const user = localStorage.getItem("currentUser");
             if(!user) return;
-            
             try {
                 const res = await fetch(`${apiBase}?sheet=LichSuNap`);
                 const data = await res.json();
-                
                 const cleanData = data.filter(i => i.username.trim() === user.trim() && i.status.trim() === "Đã duyệt");
                 let total = 0;
                 cleanData.forEach(t => total += parseInt(t.menhGia || 0));
-                
                 document.getElementById("userBalance").innerText = total.toLocaleString() + " đ";
                 localStorage.setItem("userBalance", total);
             } catch(e) { document.getElementById("userBalance").innerText = "0 đ"; }
         }
 
-        // KHỞI ĐỘNG HỆ THỐNG KHI ĐÃ ĐĂNG NHẬP THÀNH CÔNG
         function initSystem() {
             const user = localStorage.getItem("currentUser");
             if(user) {
                 document.getElementById("authOverlay").style.display = "none";
                 document.getElementById("userWidget").style.display = "flex";
                 document.getElementById("userNameHeader").innerText = user;
-                document.getElementById("welcomePopup").style.display = "flex"; // Hiện quảng cáo
+                document.getElementById("welcomePopup").style.display = "flex";
                 getWallet();
             } else {
                 document.getElementById("authOverlay").style.display = "flex";
                 document.getElementById("userWidget").style.display = "none";
             }
         }
-
-        // Chạy kiểm tra trạng thái ngay khi load trang
         initSystem();
-        // Cập nhật ví tự động mỗi 15 giây
         setInterval(getWallet, 15000);
     </script>
 </body>
